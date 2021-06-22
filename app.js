@@ -7,31 +7,20 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-app.command("/start-chess", async ({ command, ack, say }) => {
+app.command("/start-chess", async ({ body,command, ack, say }) => {
   // Acknowledge command request
   await ack();
-
+  const players = body.text.split(" ");
   await say({
     callback_id: "playerSelect",
     blocks: [
       {
-        block_id: "playerBlock",
-        type: "input",
-        element: {
-          type: "multi_users_select",
-          placeholder: {
-            type: "plain_text",
-            text: "Select users",
-            emoji: true
-          },
-          action_id: "multi_users_select-action"
-        },
-        label: {
-          type: "plain_text",
-          text: "Start Game",
-          emoji: true
-        }
-      }
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": `Starting a game with ${players.map(player => player)} \n ${players[0]} Your Turn! Current Team: ${chess.turn()}`
+			}
+		}
     ]
   });
 });
