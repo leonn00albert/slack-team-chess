@@ -6,7 +6,7 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-
+app.command('start-chess')
 
 // All the room in the world for your code
 
