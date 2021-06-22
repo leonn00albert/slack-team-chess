@@ -6,53 +6,63 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-app.command('start-chess')
 
-app.command('/start-chess', async ({ command, ack, say }) => {
+
+app.command("/start-chess", async ({ command, ack, say }) => {
   // Acknowledge command request
   await ack();
 
-   await say({
-     callback_id: 'playerSelect',
-      blocks: [
-        {
-      "blockId": ''
-			"type": "input",
-			"element": {
-				"type": "multi_users_select",
-				"placeholder": {
-					"type": "plain_text",
-					"text": "Select users",
-					"emoji": true
-				},
-				"action_id": "multi_users_select-action"
-			},
-			"label": {
-				"type": "plain_text",
-				"text": "Start Game",
-				"emoji": true
-			}
+  await say({
+    callback_id: "playerSelect",
+    blocks: [
+      {
+        block_id: "playerBlock",
+        type: "input",
+        element: {
+          type: "multi_users_select",
+          placeholder: {
+            type: "plain_text",
+            text: "Select users",
+            emoji: true
+          },
+          action_id: "multi_users_select-action"
+        },
+        label: {
+          type: "plain_text",
+          text: "Start Game",
+          emoji: true
+        }
+      },
+      		{
+			"type": "actions",
+			"elements": [
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "Start",
+						"emoji": true
+					},
+					"value": "click_me_123",
+					"action_id": "actionId-0"
+				}
+			]
 		}
-      ]
-    });
+    ]
+  });
 });
 
 
-app.view('playerSelect', async ({ ack, body, view, client }) => {
-   await ack();
-  console.log(view.state.values);
-}
-        );
-app.action('multi_users_select-action', async ({ ack, say }) => {
-  // Acknowledge action request
+
+app.action('actionId-0', async ({ ack, say }) => {
+  
   await ack();
-  await say('Request approved 👍');
+  await say('hello');
 });
-
 
 (async () => {
   // Start your app
   await app.start(process.env.PORT || 3000);
 
-  console.log('⚡️ Bolt app is running!');
+  console.log("⚡️ Bolt app is running!");
 })();
