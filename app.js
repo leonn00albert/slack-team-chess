@@ -36,6 +36,36 @@ app.command("/start-chess", async ({ command, ack, say }) => {
   });
 });
 
+
+app.command("/chess-move", async ({ command, ack, body, say }) => {
+  // Acknowledge command request
+  await ack();
+
+  await say({
+    callback_id: "playerSelect",
+    blocks: [
+      {
+        block_id: "playerBlock",
+        type: "input",
+        element: {
+          type: "multi_users_select",
+          placeholder: {
+            type: "plain_text",
+            text: "Select users",
+            emoji: true
+          },
+          action_id: "multi_users_select-action"
+        },
+        label: {
+          type: "plain_text",
+          text: "Start Game",
+          emoji: true
+        }
+      }
+    ]
+  });
+});
+
 app.view("playerSelect", async ({ say, ack, body, view, client }) => {
   await ack();
   await say("hello");
@@ -59,7 +89,14 @@ app.action(
           type: "image",
           image_url: fenURl,
           alt_text: "inspiration"
-        }
+        },
+        {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": `Your Turn! Current Team: ${chess.turn()}`
+			}
+		}
       ]
     });
 
@@ -67,6 +104,9 @@ app.action(
     console.log(selectedUsers);
   }
 );
+
+
+
 
 (async () => {
   // Start your app
