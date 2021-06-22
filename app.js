@@ -16,6 +16,7 @@ app.command('/start-chess', async ({ command, ack, say }) => {
      callback_id: 'playerSelect',
       blocks: [
         {
+      "blockId": ''
 			"type": "input",
 			"element": {
 				"type": "multi_users_select",
@@ -37,7 +38,11 @@ app.command('/start-chess', async ({ command, ack, say }) => {
 });
 
 
-app.view()
+app.view('playerSelect', async ({ ack, body, view, client }) => {
+   await ack();
+  console.log(view.state.values);
+}
+        );
 app.action('multi_users_select-action', async ({ ack, say }) => {
   // Acknowledge action request
   await ack();
