@@ -32,33 +32,28 @@ app.command("/start-chess", async ({ command, ack, say }) => {
           text: "Start Game",
           emoji: true
         }
-      },
-      		{
-			"type": "actions",
-			"elements": [
-				{
-					"type": "button",
-					"text": {
-						"type": "plain_text",
-						"text": "Start",
-						"emoji": true
-					},
-					"value": "click_me_123",
-					"action_id": "actionId-0"
-				}
-			]
-		}
+      }
     ]
   });
 });
 
-
-
-app.action('actionId-0', async ({ ack, say }) => {
-  
+app.view("playerSelect", async ({say, ack, body, view, client }) => {
   await ack();
-  await say('hello');
+  await(say('hello'))
+    const val = view['state']['values']['playerBlock']['multi_users_select-action'];
+
+  console.log(val);
 });
+app.action("multi_users_select-action", async ({say, ack, body, view, client }) => {
+  await ack();
+  await(say('hello'))
+  console.log(body)
+
+
+});
+
+
+
 
 (async () => {
   // Start your app
