@@ -16,7 +16,10 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
   chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   const selectedPlayers = body.text.split(" ");
   
-  const players = selectedPlayers.map(player => {name: player});
+  const players = selectedPlayers.map(player => {
+    return {name: player, team: ''} }
+    );
+    
   game.createTeams(players);
   
   const fen = chess.fen().split(" ");
@@ -42,8 +45,8 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
         text: {
           type: "mrkdwn",
           text: `:chess_pawn: Starting a game with ${players.map(
-            player => player
-          )} \n ${players[0]} Your Turn! Current Team: ${chess.turn()}`
+            player => player.name
+          )} \n ${players[0].name} Your Turn! you are team: *${players[0].team.toUpperCase()}*`
         }
       }
     ]

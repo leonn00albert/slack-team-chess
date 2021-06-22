@@ -51,10 +51,10 @@ class Game {
     function _private(players) {
       players.forEach((player, i) => {
         if (i % 2) {
-          player.team = "w";
+          player.team = "b";
           teams.w.players.push(player);
         } else {
-          player.team = "b";
+          player.team = "w";
           teams.b.players.push(player);
         }
       });
