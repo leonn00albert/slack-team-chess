@@ -7,48 +7,64 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-app.command("/start-chess", async ({ body,command, ack, say }) => {
+app.command("/start-chess", async ({ body, command, ack, say }) => {
   // Acknowledge command request
   await ack();
+  chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   const players = body.text.split(" ");
+  const fen = chess.fen().split(" ");
+  const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
   await say({
     callback_id: "playerSelect",
-    blocks: [
+    blocks: [      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `*Game ID:* - *Turn:* - *Team:*`
+        }
+      },
+      
       {
-			"type": "section",
-			"text": {
-				"type": "mrkdwn",
-				"text": `Starting a game with ${players.map(player => player)} \n ${players[0]} Your Turn! Current Team: ${chess.turn()}`
-			}
-		}
+        type: "image",
+        image_url: fenURl,
+        alt_text: "inspiration"
+      },
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `:chess_pawn: Starting a game with ${players.map(player => player)} \n ${
+            players[0]
+          } Your Turn! Current Team: ${chess.turn()}`
+        }
+      }
     ]
   });
 });
 
-
 app.command("/chess-move", async ({ command, ack, body, say }) => {
   // Acknowledge command request
   await ack();
-  const move = body.text.split(" ")
-  chess.move({from: move[0], to: move[1]})
+  const move = body.text.split(" ");
+  chess.move({ from: move[0], to: move[1] });
   const fen = chess.fen().split(" ");
   const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
   await say({
-     blocks: [
-        {
-          type: "image",
-          image_url: fenURl,
-          alt_text: "inspiration"
-        },
-        {
-			"type": "section",
-			"text": {
-				"type": "mrkdwn",
-				"text": `Your Turn! Current Team: ${chess.turn()} Last Move: ${move}`
-			}
-		}
-      ]
-  })
+    blocks: [
+      {
+        type: "image",
+        image_url: fenURl,
+        alt_text: "inspiration"
+      },
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `Your Turn! Current Team: ${chess.turn()} Last Move: ${move}`
+        }
+      }
+    ]
+  });
 });
 
 app.view("playerSelect", async ({ say, ack, body, view, client }) => {
@@ -62,8 +78,6 @@ app.view("playerSelect", async ({ say, ack, body, view, client }) => {
 app.action(
   "multi_users_select-action",
   async ({ say, ack, body, view, client }) => {
-
-
     const fen = chess.fen().split(" ");
     const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
 
@@ -77,22 +91,18 @@ app.action(
           alt_text: "inspiration"
         },
         {
-			"type": "section",
-			"text": {
-				"type": "mrkdwn",
-				"text": `<@${selectedUsers[0]}> Your Turn! Current Team: ${chess.turn()}`
-			}
-		}
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: `<@${
+              selectedUsers[0]
+            }> Your Turn! Current Team: ${chess.turn()}`
+          }
+        }
       ]
     });
-
-
-
   }
 );
-
-
-
 
 (async () => {
   // Start your app
