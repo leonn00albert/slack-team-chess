@@ -79,6 +79,7 @@ app.action(
     const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
 
     await ack();
+    const selectedUsers = body.actions[0].selected_users;
     await say({
       blocks: [
         {
@@ -90,14 +91,14 @@ app.action(
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": `Your Turn! Current Team: ${chess.turn()}`
+				"text": `<@${selectedUsers[0]}> Your Turn! Current Team: ${chess.turn()}`
 			}
 		}
       ]
     });
 
-    const selectedUsers = body.actions[0].selected_users;
-    console.log(selectedUsers);
+
+
   }
 );
 
