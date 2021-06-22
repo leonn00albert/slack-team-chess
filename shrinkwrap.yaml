@@ -1,6 +1,7 @@
 dependencies:
   '@slack/bolt': 1.6.0
   chess.js: 0.12.0
+  local-storage: 2.0.0
 packages:
   /@slack/bolt/1.6.0:
     dependencies:
@@ -390,6 +391,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-EtSj3U5o4Lec6428hBc66A2RykQ=
+  /local-storage/2.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-/0sRoeijw7yr/igbVVygDuq6dlYCmtsuTmmpnweVlVtl/s10pf5BCq8LWBxW/AMyFJ3MhMUuggMZiYlx6qr9tw==
   /media-typer/0.3.0:
     dev: false
     engines:
@@ -627,3 +632,4 @@ shrinkwrapVersion: 3
 specifiers:
   '@slack/bolt': ^1.6.0
   chess.js: ^0.12.0
+  local-storage: ^2.0.0

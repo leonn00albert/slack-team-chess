@@ -8,6 +8,13 @@ const app = new App({
 });
 
 app.command("/start-chess", async ({ body, command, ack, say }) => {
+  
+  const game = {
+    id: 0,
+    teams : 
+    players: [],
+    date: 0,
+  }
   // Acknowledge command request
   await ack();
   chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
