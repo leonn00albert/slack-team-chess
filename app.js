@@ -1,12 +1,11 @@
 // Require the Bolt package (github.com/slackapi/bolt)
 const { App } = require("@slack/bolt");
+const { Chess } = require("chess.js");
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
-
-
 
 app.command("/start-chess", async ({ command, ack, say }) => {
   // Acknowledge command request
@@ -37,23 +36,37 @@ app.command("/start-chess", async ({ command, ack, say }) => {
   });
 });
 
-app.view("playerSelect", async ({say, ack, body, view, client }) => {
+app.view("playerSelect", async ({ say, ack, body, view, client }) => {
   await ack();
-  await(say('hello'))
-    const val = view['state']['values']['playerBlock']['multi_users_select-action'];
+  await say("hello");
+  const val =
+    view["state"]["values"]["playerBlock"]["multi_users_select-action"];
 
   console.log(val);
 });
-app.action("multi_users_select-action", async ({say, ack, body, view, client }) => {
-  await ack();
-  await(say('hello'))
-  console.log(body)
+app.action(
+  "multi_users_select-action",
+  async ({ say, ack, body, view, client }) => {
+    const chess = new Chess();
 
+    const fen = chess.fen().split(" ");
+    const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
 
-});
+    await ack();
+    await say({
+      blocks: [
+        {
+          type: "image",
+          image_url: fenURl,
+          alt_text: "inspiration"
+        }
+      ]
+    });
 
-
-
+    const selectedUsers = body.actions[0].selected_users;
+    console.log(selectedUsers);
+  }
+);
 
 (async () => {
   // Start your app
