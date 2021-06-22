@@ -1,36 +1,37 @@
 // Require the Bolt package (github.com/slackapi/bolt)
 const { App } = require("@slack/bolt");
 const { Chess } = require("chess.js");
+const Game = require('./Game');
 const chess = new Chess();
+
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
 app.command("/start-chess", async ({ body, command, ack, say }) => {
-  
-  const game = {
-    id: 0,
-    teams : 
-    players: [],
-    date: 0,
-  }
+  const game =  new Game(chess, )
   // Acknowledge command request
   await ack();
   chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-  const players = body.text.split(" ");
+  const selectedPlayers = body.text.split(" ");
+  
+  const players = selectedPlayers.map(player => {name: player});
+  game.createTeams(players);
+  
   const fen = chess.fen().split(" ");
   const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
   await say({
     callback_id: "playerSelect",
-    blocks: [      {
+    blocks: [
+      {
         type: "section",
         text: {
           type: "mrkdwn",
           text: `*Game ID:* - *Turn:* - *Team:*`
         }
       },
-      
+
       {
         type: "image",
         image_url: fenURl,
@@ -40,9 +41,9 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `:chess_pawn: Starting a game with ${players.map(player => player)} \n ${
-            players[0]
-          } Your Turn! Current Team: ${chess.turn()}`
+          text: `:chess_pawn: Starting a game with ${players.map(
+            player => player
+          )} \n ${players[0]} Your Turn! Current Team: ${chess.turn()}`
         }
       }
     ]
