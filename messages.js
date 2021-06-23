@@ -1,5 +1,5 @@
 const messages = {
-  startChess: (fenURl, game, players) => ({
+  startChess: (game) => ({
     callback_id: "playerSelect",
     blocks: [
       {
@@ -12,7 +12,7 @@ const messages = {
 
       {
         type: "image",
-        image_url: fenURl,
+        image_url: game.fenUrl,
         alt_text: "inspiration"
       },
       {
@@ -30,8 +30,8 @@ const messages = {
     
     
             \n${
-              players[0].name
-            } Your Turn! you are team: *${players[0].team.toUpperCase()}*`
+             game.currentPlayer
+            } Your Turn! you are team:*`
         }
       }
     ]

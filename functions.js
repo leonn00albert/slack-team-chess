@@ -25,7 +25,9 @@ const functions = {
 
     return _private(selectedPlayers);
   },
-  validateStartChess: (arr, alerts, say, messages, game) => {
+  
+
+  validateStartChess: (arr, alerts, say, messages, games, Game, chess) => {
     const selectedPlayers = arr;
     async function _private(selectedPlayers) {
       if (functions.checkEnoughPlayers(selectedPlayers)) {
@@ -35,9 +37,10 @@ const functions = {
       } else if (functions.checkDuplicatePlayers(selectedPlayers)) {
         return await say(alerts.duplicatedPlayers);
       } else {
-
-        
-        await say(messages.startChess(game.startGame(), game, players));
+        const gameId = Object.keys(games).length;
+        games[gameId] = new Game(chess,gameId, functions.prepPlayers(selectedPlayers));
+      
+        await say(messages.startChess(games[gameId].startGame(), game, players));
       }
     }
     return _private(selectedPlayers);
@@ -51,7 +54,10 @@ const functions = {
     }
     return _private(selectedPlayers)
   },
-  createGame : (playersgames,Game,chess) => {
+  createGame : (arr,games,Game,chess) => {
+      const players = functions.prepPlayers(arr);
+      
+    
     
   }
 };

@@ -13,10 +13,11 @@ class Game {
     };
     this.id = id;
     this.currentFen = "";
+    this.currentFenUrl = "";
     this.currentUser = "";
     this.turns = 0;
     this.startingDate = "";
-    
+    this.lastMove = "";
     this.startGame(players)
   }
   static parseFen(str) {
@@ -59,6 +60,7 @@ class Game {
       game.currentFen =
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
       game.startingDate = game.getCurrentDate();
+      game.currentFenUrl = game.getCurrentDate();
       game.chess.load(game.currentFen);
       return game.fenUrl(game.currentFen);
     }

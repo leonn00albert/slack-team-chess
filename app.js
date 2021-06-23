@@ -17,7 +17,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
   // Acknowledge command request
   await ack();
   const selectedPlayers = body.text.split(" ");
-  functions.validateStartChess(selectedPlayers, alerts, say, messages,games,Game) 
+  functions.validateStartChess(selectedPlayers, alerts, say, messages,games,Game,chess) 
 
   
 });
