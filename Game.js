@@ -1,5 +1,5 @@
 class Game {
-  constructor(chess) {
+  constructor(chess,id) {
     this.chess = chess;
     this.teams = {
       w: {
@@ -11,11 +11,12 @@ class Game {
         currentPlayer: 0
       }
     };
-
+    this.id = id;
     this.currentFen = "";
     this.currentUser = "";
     this.turns = 0;
-    this.startingDate = ""
+    this.startingDate = "";
+    t
   }
   static parseFen(str) {
     const fen = str;
@@ -54,9 +55,10 @@ class Game {
     function _private(players) {
       game.createTeams(players);
       game.currentUser = game.team.w.players[0];
-      game.currentFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+      game.currentFen =
+        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
       game.startingDate = game.getCurrentDate();
-       game.chess.load(game.currentFen);
+      game.chess.load(game.currentFen);
       return game.fenUrl(game.currentFen);
     }
     return _private(players);

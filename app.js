@@ -7,7 +7,7 @@ const alerts = require("./alerts");
 const messages = require("./messages");
 
 const chess = new Chess();
-
+const games = {}
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET
@@ -18,11 +18,14 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
   await ack();
   const selectedPlayers = body.text.split(" ");
   functions.validateStartChess(selectedPlayers, alerts, say, messages, chess, Game) 
+  const gameId = games[Object.keys(games).length.toString()]
+  gameId = new Game(chess);
+  
 });
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {
-  console.log(body)
-  const game = new Game();
+  
+   const game = games["1"]
   // Acknowledge command request
   if (body.username !== game.currentPlayer) {
     
