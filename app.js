@@ -5,6 +5,7 @@ const Game = require("./Game");
 const functions = require("./functions");
 const alerts = require("./alerts");
 const messages = require("./messages");
+const commands = require("./commands");
 const chess = new Chess();
 
 const app = new App({
@@ -12,30 +13,7 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-app.command("/start-chess", async ({ body, command, ack, say }) => {
-  // Acknowledge command request
-  await ack();
-  const selectedPlayers = body.text.split(" ");
-  if (functions.checkEnoughPlayers(selectedPlayers)) {
-    return await say(alerts.notEnoughplayers);
-  } else if (functions.checkPlayersTagged(selectedPlayers)) {
-    return await say(alerts.playersNotTagged);
-  } else if (functions.checkDuplicatePlayers(selectedPlayers)) {
-    return await say(alerts.duplicatedPlayers);
-  } else {
-    chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-    const players = selectedPlayers.map(player => {
-      return { name: player, team: "" };
-    });
-
-    const game = new Game(chess);
-    game.createTeams(players);
-    const fen = chess.fen().split(" ");
-    const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
-    console.log(game.teams.w.players);
-    await say(messages.startChess(fenURl, game, players));
-  }
-});
+app.command("/start-chess", commands.startChess();
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {
   // Acknowledge command request
