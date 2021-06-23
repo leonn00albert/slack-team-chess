@@ -78,15 +78,15 @@ const functions = {
     }
     return _private(game);
   },
-  checkForValidMove: (arr,game,alerts) => {
+  checkForValidMove: (arr,game,alerts,say) => {
     const currentFen = game.currentFen;
     const [from,to] = [arr];
-    function _private() {
+    async function _private() {
       game.chess.move({from: from, to: to})
       game.chess.fen()
       if (game.chess.fen() === currentFen) {
         game.chess.undo();
-        return alerts.NotValidMove;
+        return await say(alerts.NotValidMove);
       }else {
         return false
       }
