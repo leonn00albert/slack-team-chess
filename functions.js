@@ -83,6 +83,8 @@ const functions = {
     async function _private() {
       game.chess.move({from: from, to: to})
       game.chess.fen()
+      console.log(currentFen);
+      console.log( game.chess.fen());
       if (game.chess.fen() === currentFen) {
         game.chess.undo();
         return await say(alerts.NotValidMove);

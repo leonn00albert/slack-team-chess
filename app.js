@@ -30,6 +30,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {
   await ack();
+
   const user = body.username;
   const text =  body.text.split(" ");
   const gameId = text[0];
@@ -41,15 +42,9 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
   } else if (!functions.checkIfRightUser(user, game.currentUser)) {
     await say(alerts.notSamePlayer);
   } else if (functions.canMakeMove(game)) {
-    await say(alerts.cannotMakeMove);
-  } else if (functions.checkForValidMove(move,game,alerts,say)) {
-  
-  }
+    
+  } 
 
-  chess.move({ from: move[0], to: move[1] });
-  const fen = chess.fen().split(" ");
-  const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
-  await say(messages.chessMove(fenURl, chess, move));
 });
 
 (async () => {
