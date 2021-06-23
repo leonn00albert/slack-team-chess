@@ -3,6 +3,7 @@ const { App } = require("@slack/bolt");
 const { Chess } = require("chess.js");
 const Game = require("./Game");
 const functions = require("./functions");
+const alerts = require("./alerts");
 const chess = new Chess();
 
 const app = new App({
@@ -48,18 +49,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
    }
   
     else if (functions.checkDuplicatePlayers(selectedPlayers)) {
-           return await say({
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text:
-              ":warning: *Could not start!* Duplicated player make sure you only add one of each `e.g /start-chess @name`"
-          }
-        }
-      ]
-    });
+           return await say(alerts.duplicatedPlayers);
     }
   else {
     chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
