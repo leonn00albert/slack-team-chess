@@ -12,9 +12,10 @@ class Game {
       }
     };
 
+    this.currentFen = "";
     this.currentUser = "";
     this.turns = 0;
-    this.startingDate = this.getCurrentDate();
+    this.startingDate = ""
   }
   static parseFen(str) {
     const fen = str;
@@ -52,8 +53,13 @@ class Game {
     const game = this;
     function _private(players) {
       game.createTeams(players);
-      game.currentUser = this.team.w.players[0];
+      game.currentUser = game.team.w.players[0];
+      game.currentFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+      game.startingDate = game.getCurrentDate();
+       game.chess.load(game.currentFen);
+      return game.fenUrl(game.currentFen);
     }
+    return _private(players);
   }
 
   createTeams(arr) {
