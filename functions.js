@@ -78,7 +78,21 @@ const functions = {
     }
     return _private(game);
   },
-  checkForValidMove: (game) => {
+  checkForValidMove: (arr,game,alerts) => {
+    const currentFen = game.currentFen;
+    const [from,to] = [arr];
+    function _private() {
+      game.chess.move({from: from, to: to})
+      game.chess.fen()
+      if (game.chess.fen() === currentFen) {
+        game.chess.undo();
+        return alerts.NotValidMove;
+      }else {
+        return false
+      }
+     
+    }
+    return _private()
     
   }
 

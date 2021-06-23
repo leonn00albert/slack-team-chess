@@ -22,6 +22,9 @@ const test = {
   checkForGameId: {
     shouldFail: "fail",
     shouldSucceed: "3"
+  },
+  checkForValidMove: {
+    
   }
 };
 
