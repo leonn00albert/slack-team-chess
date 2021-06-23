@@ -15,13 +15,10 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
   // Acknowledge command request
   await ack();
   const selectedPlayers = body.text.split(" ");
-  console.log(selectedPlayers.length);
-  console.log(selectedPlayers);
-
   if (functions.checkEnoughPlayers(selectedPlayers)) {
     return await say(alerts.notEnoughplayers);
-  } else if (functions.checkPlayersTagged()) {
-    return await say({alerts.playersNotTagged});
+  } else if (functions.checkPlayersTagged(selectedPlayers)) {
+    return await say(alerts.playersNotTagged);
   } else if (functions.checkDuplicatePlayers(selectedPlayers)) {
     return await say(alerts.duplicatedPlayers);
   } else {

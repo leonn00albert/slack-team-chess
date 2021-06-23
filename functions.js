@@ -20,7 +20,7 @@ const functions = {
     const selectedPlayers = arr;
     function _private(selectedPlayers) {
       const firstLetters = selectedPlayers.map(player => player.charAt(0));
-      return firstLetters.every(letter => letter === "@") ? true : false;
+      return firstLetters.every(letter => letter === "@") ? false : true;
     }
 
     return _private(selectedPlayers);
