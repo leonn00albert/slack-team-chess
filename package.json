@@ -4,6 +4,7 @@
   "description": "A basic template to spin up a Bolt app for Slack",
   "main": "app.js",
   "scripts": {
+    "test": "mocha",
     "start": "node app.js"
   },
   "dependencies": {
