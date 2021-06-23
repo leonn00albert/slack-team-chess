@@ -14,7 +14,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
   await ack();
   const selectedPlayers = body.text.split(" ");
   console.log(selectedPlayers.length);
-   console.log(selectedPlayers);
+  console.log(selectedPlayers);
   if (selectedPlayers[0] === "") {
     await say({
       blocks: [
@@ -22,7 +22,8 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: ":warning: *Could not start!* Please add some players :arrow_right: `e.g /start-chess  @name @name2 @name3`"
+            text:
+              ":warning: *Could not start!* Please add some players :arrow_right: `e.g /start-chess  @name @name2 @name3`"
           }
         }
       ]
@@ -37,6 +38,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
     game.createTeams(players);
     const fen = chess.fen().split(" ");
     const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
+    console.log(game.teams)
     await say({
       callback_id: "playerSelect",
       blocks: [
@@ -59,7 +61,16 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
             type: "mrkdwn",
             text: `:chess_pawn: Starting a game with ${players.map(
               player => player.name
-            )} \n ${
+            )} \n
+            | White   |
+            |----------|
+            ${game.teams.w.players.map(player => {
+              return `| ${player.name} |`;
+            })}
+
+    
+    
+            \n${
               players[0].name
             } Your Turn! you are team: *${players[0].team.toUpperCase()}*`
           }
