@@ -2,6 +2,7 @@
 const { App } = require("@slack/bolt");
 const { Chess } = require("chess.js");
 const Game = require("./Game");
+const functions = require("./functions");
 const chess = new Chess();
 
 const app = new App({
@@ -16,10 +17,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
   console.log(selectedPlayers.length);
   console.log(selectedPlayers);
   const firstLetters = selectedPlayers.map(player => player.charAt(0));
-  function checkDuplicatePlayers(arr) {
-    const players = arr;
-    
-  }
+
   if (selectedPlayers[0] === "") {
    return  await say({
       blocks: [
@@ -49,7 +47,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
     });
    }
   
-    else if (checkDuplicatePlayers(selectedPlayers)) {
+    else if (functions.checkDuplicatePlayers(selectedPlayers)) {
            return await say({
       blocks: [
         {
@@ -57,7 +55,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
           text: {
             type: "mrkdwn",
             text:
-              ":warning: *Could not start!* Make sure to Tag the player `e.g /start-chess @name`"
+              ":warning: *Could not start!* Duplicated player make sure you only add one of each `e.g /start-chess @name`"
           }
         }
       ]
