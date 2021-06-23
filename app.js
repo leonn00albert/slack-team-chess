@@ -15,8 +15,13 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
   const selectedPlayers = body.text.split(" ");
   console.log(selectedPlayers.length);
   console.log(selectedPlayers);
+  const firstLetters = selectedPlayers.map(player => player.charAt(0));
+  function checkDuplicatePlayers(arr) {
+    const players = arr;
+    
+  }
   if (selectedPlayers[0] === "") {
-    await say({
+   return  await say({
       blocks: [
         {
           type: "section",
@@ -29,9 +34,35 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
       ]
     });
   }
-   else if (){
-     
+   else if (firstLetters.every(letter => letter === '@') === false ){
+     return await say({
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text:
+              ":warning: *Could not start!* Make sure to Tag the player `e.g /start-chess @name`"
+          }
+        }
+      ]
+    });
    }
+  
+    else if (checkDuplicatePlayers(selectedPlayers)) {
+           return await say({
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text:
+              ":warning: *Could not start!* Make sure to Tag the player `e.g /start-chess @name`"
+          }
+        }
+      ]
+    });
+    }
   else {
     chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     const players = selectedPlayers.map(player => {
