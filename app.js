@@ -39,13 +39,16 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
 
   // Acknowledge command request
   if (!functions.checkForGameId(gameId)) {
-    await say(alerts.notValidGameId);
+    return await say(alerts.notValidGameId);
   } else if (!functions.checkIfRightUser(user, game.currentUser)) {
-    await say(alerts.notSamePlayer);
-  } else if (functions.checkForValidMove(move,game,alerts,say)) {
-  
+    return await say(alerts.notSamePlayer);
+  }  else if (! functions.checkForValidMove(move,game,alerts,say)) {
+     game.move({from:move[0],to: move[1]});
+    await say(messages.move);
   }
-
+  
+  
+  
 });
 
 (async () => {

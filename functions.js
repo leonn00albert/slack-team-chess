@@ -89,9 +89,11 @@ const functions = {
       console.log( game.chess.fen());
       if (game.chess.fen() === currentFen) {
         game.chess.undo();
-        return await say(alerts.NotValidMove);
+         await say(alerts.NotValidMove);
+        return true
       }else {
         return false
+        
       }
      
     }

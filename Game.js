@@ -104,20 +104,21 @@ class Game {
     ];
 
     function _private(move, player) {
-      this.move(move);
+      game.chess.move(move)
       game.incrementTurns();
       game.changePlayer(player.team);
-
-      console.log(`${player.name} made this move (${JSON.stringify(move)})`);
+      game.lastMove = JSON.stringify(move);
+      game.currentFen = game.chess.fen();
+      game.currentFenUrl = game.fenUrl(game.currentFen);
+      game.currentUser =  game.teams[game.chess.turn()].players[
+              game.teams[game.chess.turn()].currentPlayer
+            ].name
       if (this.chess.game_over()) {
         console.log("Game over!");
       } else {
-        console.log(
-          "next player is " +
-            game.teams[game.chess.turn()].players[
-              game.teams[game.chess.turn()].currentPlayer
-            ].name
-        );
+        
+        return game;
+
       }
       return game.fenUrl(this.chess.fen());
     }
