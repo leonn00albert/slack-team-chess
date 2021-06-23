@@ -1,5 +1,5 @@
 class Game {
-  constructor(chess,id) {
+  constructor(chess ,id, players) {
     this.chess = chess;
     this.teams = {
       w: {
@@ -16,7 +16,8 @@ class Game {
     this.currentUser = "";
     this.turns = 0;
     this.startingDate = "";
-    t
+    
+    this.startGame(players)
   }
   static parseFen(str) {
     const fen = str;
