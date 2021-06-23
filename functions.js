@@ -74,7 +74,6 @@ const functions = {
       const index = game.chess.turn();
       const key = game.teams;
       return key[index].players[key[index].currentPlayer].canMakeMove
-
     }
     return _private(game);
   },
