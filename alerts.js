@@ -35,6 +35,18 @@ const alerts = {
         }
       }
     ]
+  },
+
+  notSamePlayer: {
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: "*INVALID MOVE*: Please wait for your turn!"
+        }
+      }
+    ]
   }
 };
 

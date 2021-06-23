@@ -57,9 +57,17 @@ const functions = {
   
   checkIfRightUser: (user, gameUser) => {
     function _private(user, game) {
-      return user === gameUser ? false : true;
+      return user !== gameUser
     }
     return _private(user, gameUser);
+  },
+  checkForGameId: (gameId) => {
+    function _private(gameId) {
+      const numbers = [0,1,2,3,4,5,6,7,8,9];
+      return numbers.some()
+
+    }
+    return _private(gameId);
   }
 
 };

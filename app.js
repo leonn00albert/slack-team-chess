@@ -29,8 +29,11 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
   const move = body.text.split(" ").shift();
   const game = games[gameId]
   // Acknowledge command request
-  if (functions.checkIFrightuser) {
-    
+  if (functions.checkForGameId(gameId) ) {
+      
+      }
+  else if (functions.checkIfRightUser(user,game.currentUser)) {
+    await say(alerts.notSamePlayer);
   }
  
   
