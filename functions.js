@@ -1,24 +1,29 @@
 const functions = {
-    checkDuplicatePlayers : (arr) => {
-    
-      let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index)
-      function _private() {
-        if(findDuplicates(arr).length === 0) {
-          console.log(findDuplicates);
-          return false;
-        }else {
-          return true;
-        }
-      }
-      return _private();
+  checkDuplicatePlayers: arr => {
+    let findDuplicates = arr =>
+      arr.filter((item, index) => arr.indexOf(item) != index);
+    function _private() {
+      return findDuplicates(arr).length === 0 ? false : true;
+    }
+    return _private();
   },
-    
-  checkEnoughPlayers : (arr) => {
+  checkEnoughPlayers: arr => {
     const selectedPlayers = arr;
     function _private(selectedPlayers) {
-      return selectedPlayers[0] === "" ? true ? false;
+      return selectedPlayers[0] === "" || selectedPlayers.length === 1
+        ? true
+        : false;
     }
-    
+    return _private(selectedPlayers);
+  },
+  checkPlayersTagged: arr => {
+    const selectedPlayers = arr;
+    function _private(selectedPlayers) {
+      const firstLetters = selectedPlayers.map(player => player.charAt(0));
+      return firstLetters.every(letter => letter === "@") ? true : false;
+    }
+
+    return _private(selectedPlayers);
   }
-}
+};
 module.exports = functions;

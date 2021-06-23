@@ -17,41 +17,14 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
   const selectedPlayers = body.text.split(" ");
   console.log(selectedPlayers.length);
   console.log(selectedPlayers);
-  const firstLetters = selectedPlayers.map(player => player.charAt(0));
 
-  if (selectedPlayers[0] === "") {
-   return  await say({
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text:
-              ":warning: *Could not start!* Please add some players :arrow_right: `e.g /start-chess  @name @name2 @name3`"
-          }
-        }
-      ]
-    });
-  }
-   else if (firstLetters.every(letter => letter === '@') === false ){
-     return await say({
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text:
-              ":warning: *Could not start!* Make sure to Tag the player `e.g /start-chess @name`"
-          }
-        }
-      ]
-    });
-   }
-  
-    else if (functions.checkDuplicatePlayers(selectedPlayers)) {
-           return await say(alerts.duplicatedPlayers);
-    }
-  else {
+  if (functions.checkEnoughPlayers(selectedPlayers)) {
+    return await say(alerts.notEnoughplayers);
+  } else if (functions.checkPlayersTagged()) {
+    return await say({alerts.playersNotTagged});
+  } else if (functions.checkDuplicatePlayers(selectedPlayers)) {
+    return await say(alerts.duplicatedPlayers);
+  } else {
     chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     const players = selectedPlayers.map(player => {
       return { name: player, team: "" };
@@ -61,7 +34,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
     game.createTeams(players);
     const fen = chess.fen().split(" ");
     const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
-    console.log(game.teams.w.players)
+    console.log(game.teams.w.players);
     await say({
       callback_id: "playerSelect",
       blocks: [
@@ -84,10 +57,10 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
             type: "mrkdwn",
             text: `:chess_pawn: # Starting a game (GAME id) :chess_pawn: \n>*White* (w) 
              ${game.teams.w.players.map(player => {
-              return `\n- <${player.name}> `;
-            })}\n\n>*Black* (b)
+               return `\n- <${player.name}> `;
+             })}\n\n>*Black* (b)
             ${game.teams.b.players.map(player => {
-                 return `\n- <${player.name}> `;
+              return `\n- <${player.name}> `;
             })}
 
     
