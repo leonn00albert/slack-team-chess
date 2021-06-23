@@ -1,5 +1,5 @@
 const messages = {
-  startChess: {
+  startChess: (fenURl, game, players) => ({
     callback_id: "playerSelect",
     blocks: [
       {
@@ -35,8 +35,25 @@ const messages = {
         }
       }
     ]
-  }
+  }),
+  chessMove : (fenURl,chess,move) => ({
+   
+    blocks: [
+      {
+        type: "image",
+        image_url: fenURl,
+        alt_text: "inspiration"
+      },
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `Your Turn! Current Team: ${chess.turn()} Last Move: ${move}`
+        }
+      }
+    ]
+  
+  })
 };
-
 
 module.exports = messages;

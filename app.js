@@ -33,7 +33,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
     const fen = chess.fen().split(" ");
     const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
     console.log(game.teams.w.players);
-    await say(messages.startChess);
+    await say(messages.startChess(fenURl, game, players));
   }
 });
 
@@ -44,60 +44,10 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
   chess.move({ from: move[0], to: move[1] });
   const fen = chess.fen().split(" ");
   const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
-  await say({
-    blocks: [
-      {
-        type: "image",
-        image_url: fenURl,
-        alt_text: "inspiration"
-      },
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `Your Turn! Current Team: ${chess.turn()} Last Move: ${move}`
-        }
-      }
-    ]
-  });
+  await say(messages.chessMove(fenURl,chess,move));
 });
 
-app.view("playerSelect", async ({ say, ack, body, view, client }) => {
-  await ack();
-  await say("hello");
-  const val =
-    view["state"]["values"]["playerBlock"]["multi_users_select-action"];
 
-  console.log(val);
-});
-app.action(
-  "multi_users_select-action",
-  async ({ say, ack, body, view, client }) => {
-    const fen = chess.fen().split(" ");
-    const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
-
-    await ack();
-    const selectedUsers = body.actions[0].selected_users;
-    await say({
-      blocks: [
-        {
-          type: "image",
-          image_url: fenURl,
-          alt_text: "inspiration"
-        },
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: `<@${
-              selectedUsers[0]
-            }> Your Turn! Current Team: ${chess.turn()}`
-          }
-        }
-      ]
-    });
-  }
-);
 
 (async () => {
   // Start your app
