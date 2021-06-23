@@ -36,7 +36,7 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
     await say(alerts.notSamePlayer);
   }
   
-  else if (functions.canMakemove()) {
+  else if (functions.canMakemove(game)) {
     await say(alerts.cannotMakeMove);
   }
   else if (functions.checkForValidMove()) {

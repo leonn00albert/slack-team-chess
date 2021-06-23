@@ -75,8 +75,10 @@ class Game {
         if (i % 2) {
           player.team = "b";
           teams.b.players.push(player);
+           player.canMakeMove = true;
         } else {
           player.team = "w";
+          player.canMakeMove = true;
           teams.w.players.push(player);
         }
       });

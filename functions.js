@@ -68,6 +68,18 @@ const functions = {
 
     }
     return _private(gameId);
+  },
+    canMakeMove: (game) => {
+    function _private(game) {
+      const index = game.chess.turn();
+      const key = game.teams;
+      return key[index].players[key[index].currentPlayer].canMakeMove
+
+    }
+    return _private(game);
+  },
+  checkForValidMove: (game) => {
+    
   }
 
 };

@@ -43,18 +43,41 @@ const alerts = {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: "*INVALID MOVE*: Please wait for your turn!"
+          text: ":warning: *INVALID MOVE*: Please wait for your turn!"
         }
       }
     ]
   },
-   notValidGameId: {
+  notValidGameId: {
     blocks: [
       {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: "*INVALID MOVE*: Please use a valid `game ID!``"
+          text: ":warning: *INVALID MOVE*: Please use a valid `game ID!``"
+        }
+      }
+    ]
+  },
+  canMakemove: {
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: ":warning: *INVALID MOVE*: You have made your move``"
+        }
+      }
+    ]
+  },
+
+  NotValidMove: {
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: ":warning: *INVALID MOVE*: Please try something else"
         }
       }
     ]
