@@ -1,7 +1,7 @@
 // Require the Bolt package (github.com/slackapi/bolt)
 const { App } = require("@slack/bolt");
 const { Chess } = require("chess.js");
-const Game = require('./Game');
+const Game = require("./Game");
 const chess = new Chess();
 
 const app = new App({
@@ -10,53 +10,63 @@ const app = new App({
 });
 
 app.command("/start-chess", async ({ body, command, ack, say }) => {
-  
   // Acknowledge command request
   await ack();
-  chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   const selectedPlayers = body.text.split(" ");
-  
-  const players = selectedPlayers.map(player => {
-    return {name: player, team: ''} }
-    );
-    
-
-  if (selectedPlayers.length === 0) {
-    
+  console.log(selectedPlayers.length);
+   console.log(selectedPlayers);
+  if (selectedPlayers[0] === "") {
+    await say({
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: ":warning: *Could not start!* Please add some players :arrow_right: `e.g /start-chess  @name @name2 @name3`"
+          }
+        }
+      ]
+    });
   } else {
-    const game =  new Game(chess)
-      game.createTeams(players);
+    chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    const players = selectedPlayers.map(player => {
+      return { name: player, team: "" };
+    });
+
+    const game = new Game(chess);
+    game.createTeams(players);
     const fen = chess.fen().split(" ");
-  const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
-  await say({
-    callback_id: "playerSelect",
-    blocks: [
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `*Game ID:* - *Turn:* - *Team:*`
-        }
-      },
+    const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
+    await say({
+      callback_id: "playerSelect",
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: `*Game ID:* - *Turn:* - *Team:*`
+          }
+        },
 
-      {
-        type: "image",
-        image_url: fenURl,
-        alt_text: "inspiration"
-      },
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `:chess_pawn: Starting a game with ${players.map(
-            player => player.name
-          )} \n ${players[0].name} Your Turn! you are team: *${players[0].team.toUpperCase()}*`
+        {
+          type: "image",
+          image_url: fenURl,
+          alt_text: "inspiration"
+        },
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: `:chess_pawn: Starting a game with ${players.map(
+              player => player.name
+            )} \n ${
+              players[0].name
+            } Your Turn! you are team: *${players[0].team.toUpperCase()}*`
+          }
         }
-      }
-    ]
-  });
+      ]
+    });
   }
-
 });
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {
