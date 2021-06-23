@@ -40,7 +40,7 @@ const functions = {
         const gameId = Object.keys(games).length;
         games[gameId] = new Game(chess,gameId, functions.prepPlayers(selectedPlayers));
         await say(messages.startChess(games[gameId]));
-        console.log(games[gameId]);
+       
       }
     }
     return _private(selectedPlayers);
@@ -54,6 +54,8 @@ const functions = {
     }
     return _private(selectedPlayers);
   },
+  
+  checkIfRightUser: ar
 
 };
 module.exports = functions;

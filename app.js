@@ -23,13 +23,16 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
 });
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {
-  const move = body.text.split(" ");
-   const game = games["1"]
+  await ack();
+  const user = body.username;
+  const gameId = body.text.split(" ")[0]
+  const move = body.text.split(" ").shift();
+  const game = games[gameId]
   // Acknowledge command request
-  if (body.username !== game.currentPlayer) {
+  if (body.user_name !== game.currentUSer) {
     
   }
-  await ack();
+ 
   
   chess.move({ from: move[0], to: move[1] });
   const fen = chess.fen().split(" ");
