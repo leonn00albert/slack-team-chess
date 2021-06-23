@@ -56,7 +56,6 @@ class Game {
     const game = this;
     function _private(players) {
       game.createTeams(players);
-      console.log(game.teams.w.players)
       game.currentUser = game.teams.w.players[0].name;
       game.currentFen =
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
