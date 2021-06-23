@@ -18,6 +18,10 @@ const test = {
   checkIfRightUser: {
     shouldFail: ["leon", "james"],
     shouldSucceed: ["leon", "leon"]
+  },
+  checkForGameId: {
+    shouldFail: "fail",
+    shouldSucceed: "3"
   }
 };
 
@@ -66,15 +70,38 @@ describe("/chess-move", function() {
   describe("checkIfRightUser()", function() {
     it("Should return True when the users are not the same", function() {
       assert.ok(
-        functions.checkIfRightUser(test.checkIfRightUser.shouldFail[0] ,test.checkIfRightUser.shouldFail[1])
+        functions.checkIfRightUser(
+          test.checkIfRightUser.shouldFail[0],
+          test.checkIfRightUser.shouldFail[1]
+        )
       );
     });
     it("Should return False when the users are  the same", function() {
       assert.ok(
         !functions.checkIfRightUser(
-         test.checkIfRightUser.shouldSucceed[0] ,test.checkIfRightUser.shouldSucceed[1])
+          test.checkIfRightUser.shouldSucceed[0],
+          test.checkIfRightUser.shouldSucceed[1]
         )
-
+      );
+    });
+  });
+  
+    describe("checkForGameId()", function() {
+    it("Should return False when the game id is not present", function() {
+      assert.ok(!
+        functions.checkForGameId(
+          test.checkForGameId.shouldFail
+        
+        )
+      );
+    });
+    it("Should return True when the game id is present", function() {
+      assert.ok(
+        functions.checkForGameId(
+          test.checkForGameId.shouldSucceed
+        
+        )
+      );
     });
   });
 });

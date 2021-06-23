@@ -47,6 +47,17 @@ const alerts = {
         }
       }
     ]
+  },
+   notValidGameId: {
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: "*INVALID MOVE*: Please use a valid `game ID!``"
+        }
+      }
+    ]
   }
 };
 
