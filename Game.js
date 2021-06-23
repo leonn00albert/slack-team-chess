@@ -115,7 +115,7 @@ class Game {
       game.currentUser =  game.teams[game.chess.turn()].players[
               game.teams[game.chess.turn()].currentPlayer
             ].name
-      if (this.chess.game_over()) {
+      if (game.chess.game_over()) {
         console.log("Game over!");
       }
       console.log(game)
