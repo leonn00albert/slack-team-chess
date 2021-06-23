@@ -9,7 +9,8 @@
   "dependencies": {
     "@slack/bolt": "^1.6.0",
     "chess.js": "^0.12.0",
-    "local-storage": "^2.0.0"
+    "local-storage": "^2.0.0",
+    "mocha": "^9.0.0"
   },
   "engines": {
     "node": "11.x"
