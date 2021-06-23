@@ -8,12 +8,16 @@ const test = {
     shouldSucceed: ["<@Leon>", "<@James>"]
   },
   checkEnoughPlayers: {
-     shouldFail: ["<@Leon>"],
-     shouldSucceed: ["<@Leon>", "<@James>"]
+    shouldFail: ["<@Leon>"],
+    shouldSucceed: ["<@Leon>", "<@James>"]
   },
   checkPlayersTagged: {
-     shouldFail: ["Leon> @Leon"],
-     shouldSucceed: ["@Leon", "@James"]
+    shouldFail: ["Leon> @Leon"],
+    shouldSucceed: ["@Leon", "@James"]
+  },
+  checkIfRightUser: {
+    shouldFail: ["leon", "james"],
+    shouldSucceed: ["leon", "leon"]
   }
 };
 
@@ -26,11 +30,13 @@ describe("/start-chess", function() {
     });
     it("Should return False when there are no duplicated users", function() {
       assert.ok(
-        !functions.checkDuplicatePlayers(test.checkDuplicatePlayers.shouldSucceed)
+        !functions.checkDuplicatePlayers(
+          test.checkDuplicatePlayers.shouldSucceed
+        )
       );
     });
   });
-    describe("checkEnoughPlayers()", function() {
+  describe("checkEnoughPlayers()", function() {
     it("Should return True when there are not enough users", function() {
       assert.ok(
         functions.checkEnoughPlayers(test.checkEnoughPlayers.shouldFail)
@@ -42,7 +48,7 @@ describe("/start-chess", function() {
       );
     });
   });
-    describe("checkPlayersTagged()", function() {
+  describe("checkPlayersTagged()", function() {
     it("Should return True when one of the users is not tagged", function() {
       assert.ok(
         functions.checkPlayersTagged(test.checkPlayersTagged.shouldFail)
@@ -52,6 +58,23 @@ describe("/start-chess", function() {
       assert.ok(
         !functions.checkPlayersTagged(test.checkPlayersTagged.shouldSucceed)
       );
+    });
+  });
+});
+
+describe("/chess-move", function() {
+  describe("checkIfRightUser()", function() {
+    it("Should return True when the users are not the same", function() {
+      assert.ok(
+        functions.checkIfRightUser(test.checkIfRightUser.shouldFail[0] ,test.checkIfRightUser.shouldFail[1])
+      );
+    });
+    it("Should return False when the users are  the same", function() {
+      assert.ok(
+        !functions.checkIfRightUser(
+         test.checkIfRightUser.shouldSucceed[0] ,test.checkIfRightUser.shouldSucceed[1])
+        )
+
     });
   });
 });

@@ -55,7 +55,12 @@ const functions = {
     return _private(selectedPlayers);
   },
   
-  checkIfRightUser: ar
+  checkIfRightUser: (user, gameUser) => {
+    function _private(user, game) {
+      return user === gameUser ? false : true;
+    }
+    return _private(user, gameUser);
+  }
 
 };
 module.exports = functions;

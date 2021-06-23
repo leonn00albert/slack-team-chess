@@ -29,7 +29,7 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
   const move = body.text.split(" ").shift();
   const game = games[gameId]
   // Acknowledge command request
-  if (body.user_name !== game.currentUSer) {
+  if (functions.checkIFrightuser) {
     
   }
  
