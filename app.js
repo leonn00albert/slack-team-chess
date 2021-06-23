@@ -5,7 +5,7 @@ const Game = require("./Game");
 const functions = require("./functions");
 const alerts = require("./alerts");
 const messages = require("./messages");
-const commands = require("./commands");
+
 const chess = new Chess();
 
 const app = new App({
@@ -13,7 +13,12 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-app.command("/start-chess", commands.startChess();
+app.command("/start-chess", async ({ body, command, ack, say }) => {
+  // Acknowledge command request
+  await ack();
+  const selectedPlayers = body.text.split(" ");
+  functions.validateStartChess(selectedPlayers, alerts, say, messages, chess, Game) 
+});
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {
   // Acknowledge command request
