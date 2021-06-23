@@ -52,10 +52,10 @@ class Game {
       players.forEach((player, i) => {
         if (i % 2) {
           player.team = "b";
-          teams.w.players.push(player);
+          teams.b.players.push(player);
         } else {
           player.team = "w";
-          teams.b.players.push(player);
+          teams.w.players.push(player);
         }
       });
 

@@ -38,7 +38,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
     game.createTeams(players);
     const fen = chess.fen().split(" ");
     const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
-    console.log(game.teams)
+    console.log(game.teams.w.players)
     await say({
       callback_id: "playerSelect",
       blocks: [
@@ -59,12 +59,18 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: `:chess_pawn: Starting a game with ${players.map(
-              player => player.name
-            )} \n
-            | White   |
+            text: `:chess_pawn: # Starting a game (GAME id) :chess_pawn: \N
+             > #### White (w) 
+    
+            >
+             ${game.teams.w.players.map(player => {
+              return `> <${player.name}> `;
+            })}
+            >
+       
+            | Black (b) |
             |----------|
-            ${game.teams.w.players.map(player => {
+            ${game.teams.b.players.map(player => {
               return `| ${player.name} |`;
             })}
 
