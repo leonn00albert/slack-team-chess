@@ -96,13 +96,15 @@ class Game {
     return _private(fen);
   }
 
-  move(str) {
-    const move = str;
+  move(obj) {
+    const move = obj;
     const game = this;
     const player = this.teams[this.chess.turn()].players[
       this.teams[this.chess.turn()].currentPlayer
     ];
 
+    
+      console.log(move)
     function _private(move, player) {
       game.chess.move(move)
       game.incrementTurns();
@@ -115,13 +117,11 @@ class Game {
             ].name
       if (this.chess.game_over()) {
         console.log("Game over!");
-      } else {
-        
-        return game;
-
       }
-      return game.fenUrl(this.chess.fen());
+      console.log(game)
+      return game;
     }
+    
     return _private(move, player);
   }
 
