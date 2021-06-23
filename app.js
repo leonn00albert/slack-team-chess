@@ -23,14 +23,14 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
 });
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {
-  
+  const move = body.text.split(" ");
    const game = games["1"]
   // Acknowledge command request
   if (body.username !== game.currentPlayer) {
     
   }
   await ack();
-  const move = body.text.split(" ");
+  
   chess.move({ from: move[0], to: move[1] });
   const fen = chess.fen().split(" ");
   const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
