@@ -79,8 +79,10 @@ const functions = {
   },
   checkForValidMove: (arr,game,alerts,say) => {
     const currentFen = game.currentFen;
-    const [from,to] = [arr];
+    const [from,to] = arr;
+    console.log(arr);
     async function _private() {
+      console.log(from + " " + to)
       game.chess.move({from: from, to: to})
       game.chess.fen()
       console.log(currentFen);
@@ -93,7 +95,7 @@ const functions = {
       }
      
     }
-    return _private()
+    return _private();
     
   }
 
