@@ -10,7 +10,7 @@ const app = new App({
 });
 
 app.command("/start-chess", async ({ body, command, ack, say }) => {
-  const game =  new Game(chess, )
+  
   // Acknowledge command request
   await ack();
   chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
@@ -20,9 +20,13 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
     return {name: player, team: ''} }
     );
     
-  game.createTeams(players);
-  
-  const fen = chess.fen().split(" ");
+
+  if (selectedPlayers.length === 0) {
+    
+  } else {
+    const game =  new Game(chess)
+      game.createTeams(players);
+    const fen = chess.fen().split(" ");
   const fenURl = `http://www.fen-to-image.com/image/${fen[0]}`;
   await say({
     callback_id: "playerSelect",
@@ -51,6 +55,8 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
       }
     ]
   });
+  }
+
 });
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {
