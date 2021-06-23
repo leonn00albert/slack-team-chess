@@ -28,7 +28,11 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
         }
       ]
     });
-  } else {
+  }
+   else if (){
+     
+   }
+  else {
     chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     const players = selectedPlayers.map(player => {
       return { name: player, team: "" };
@@ -59,19 +63,12 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: `:chess_pawn: # Starting a game (GAME id) :chess_pawn: \N
-             > #### White (w) 
-    
-            >
+            text: `:chess_pawn: # Starting a game (GAME id) :chess_pawn: \n>*White* (w) 
              ${game.teams.w.players.map(player => {
-              return `> <${player.name}> `;
-            })}
-            >
-       
-            | Black (b) |
-            |----------|
+              return `\n- <${player.name}> `;
+            })}\n\n>*Black* (b)
             ${game.teams.b.players.map(player => {
-              return `| ${player.name} |`;
+                 return `\n- <${player.name}> `;
             })}
 
     
