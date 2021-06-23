@@ -39,8 +39,7 @@ const functions = {
       } else {
         const gameId = Object.keys(games).length;
         games[gameId] = new Game(chess,gameId, functions.prepPlayers(selectedPlayers));
-      
-        await say(messages.startChess(games[gameId].startGame(), game, players));
+        await say(messages.startChess(games[gameId]));
       }
     }
     return _private(selectedPlayers);
@@ -52,13 +51,8 @@ const functions = {
         return { name: player, team: "" };
       });
     }
-    return _private(selectedPlayers)
+    return _private(selectedPlayers);
   },
-  createGame : (arr,games,Game,chess) => {
-      const players = functions.prepPlayers(arr);
-      
-    
-    
-  }
+
 };
 module.exports = functions;

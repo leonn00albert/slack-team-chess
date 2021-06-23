@@ -56,11 +56,12 @@ class Game {
     const game = this;
     function _private(players) {
       game.createTeams(players);
-      game.currentUser = game.team.w.players[0];
+      console.log(game.teams.w.players)
+      game.currentUser = game.teams.w.players[0].name;
       game.currentFen =
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
       game.startingDate = game.getCurrentDate();
-      game.currentFenUrl = game.getCurrentDate();
+      game.currentFenUrl = game.fenUrl(game.currentFen);
       game.chess.load(game.currentFen);
       return game.fenUrl(game.currentFen);
     }

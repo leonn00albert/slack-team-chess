@@ -6,20 +6,20 @@ const messages = {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `*Game ID:* - *Turn:* - *Team:*`
+          text: `*Game ID: ${game.id}* - *Turn:* - *Team:*`
         }
       },
 
       {
         type: "image",
-        image_url: game.fenUrl,
+        image_url: game.currentFenUrl,
         alt_text: "inspiration"
       },
       {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `:chess_pawn: # Starting a game (GAME id) :chess_pawn: \n>*White* (w) 
+          text: `:chess_pawn: # Starting a game with ID *${game.id}* :chess_pawn: \n>*White* (w) 
              ${game.teams.w.players.map(player => {
                return `\n- <${player.name}> `;
              })}\n\n>*Black* (b)
