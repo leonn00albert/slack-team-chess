@@ -11,6 +11,8 @@ class Game {
         currentPlayer: 0
       }
     };
+
+    this.currentUser = "";
     this.turns = 0;
     this.startingDate = this.getCurrentDate();
   }
@@ -43,6 +45,15 @@ class Game {
       }
     }
     return _private(team);
+  }
+
+  startGame(arr) {
+    const players = arr;
+    const game = this;
+    function _private(players) {
+      game.createTeams(players);
+      game.currentUser = this.team.w.players[0];
+    }
   }
 
   createTeams(arr) {

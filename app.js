@@ -21,7 +21,12 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
 });
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {
+  console.log(body)
+  const game = new Game();
   // Acknowledge command request
+  if (body.username !== game.currentPlayer) {
+    
+  }
   await ack();
   const move = body.text.split(" ");
   chess.move({ from: move[0], to: move[1] });
