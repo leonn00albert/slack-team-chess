@@ -49,19 +49,20 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
 });
 
 
-app.command("/show-chess", async ({ command, ack, body, say }) => {
+app.command("/chess-show", async ({ command, ack, body, say }) => {
   await ack();
   const user = body.user_name;
-  const action = body.text.toLowerCase().split(" ");
-   if(action = 'myGames') {
-     const MyGames = [];
+  let action = body.text.toLowerCase().split(" ");
+  console.log(action)
+   if(action === 'mygames') {
+     let MyGames = [];
      for (const id in games){
-       if( games[id].teams.w.players.include({name: '@' + user})|| games[id].teams.b.players.include({name: '@' + user} )) {
+       if( games[id].teams.w.players.includes({name: '@' + user})|| games[id].teams.b.players.include({name: '@' + user} )) {
         MyGames.push(games[id]);                              
                                            }
      }
    }
-    else if (action = 'allGames') {
+    else if (action === 'allgames') {
       await say(messages.showChess(games))
     }
      
