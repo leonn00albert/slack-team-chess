@@ -1,5 +1,5 @@
 class Game {
-  constructor(chess ,id, players) {
+  constructor(chess, id, players) {
     this.chess = chess;
     this.teams = {
       w: {
@@ -11,7 +11,7 @@ class Game {
         currentPlayer: 0
       }
     };
-    this.state= "active"
+    this.state = "active";
     this.id = id;
     this.currentFen = "";
     this.currentFenUrl = "";
@@ -19,7 +19,7 @@ class Game {
     this.turns = 0;
     this.startingDate = "";
     this.lastMove = "";
-    this.startGame(players)
+    this.startGame(players);
   }
   static parseFen(str) {
     const fen = str;
@@ -67,12 +67,11 @@ class Game {
     }
     return _private(players);
   }
-  
-  
+
   computerMove() {
     const game = this;
-    function _private(game){
-      const moves = game.chess.moves()
+    function _private(game) {
+      const moves = game.chess.moves();
       const move = Math.floor(Math.random() * moves.length);
       return move;
     }
@@ -87,7 +86,7 @@ class Game {
         if (i % 2) {
           player.team = "b";
           teams.b.players.push(player);
-           player.canMakeMove = true;
+          player.canMakeMove = true;
         } else {
           player.team = "w";
           player.canMakeMove = true;
@@ -114,36 +113,40 @@ class Game {
     const player = this.teams[this.chess.turn()].players[
       this.teams[this.chess.turn()].currentPlayer
     ];
-
-    
-
     function _private(move, player) {
-      game.chess.move(move)
+      game.chess.move(move);
       game.incrementTurns();
       game.changePlayer(player.team);
       game.lastMove = JSON.stringify(move);
       game.currentFen = game.chess.fen();
       game.currentFenUrl = game.fenUrl(game.currentFen);
-      game.currentUser =  game.teams[game.chess.turn()].players[
-              game.teams[game.chess.turn()].currentPlayer
-            ].name
-      console.log(game.currentUser)
+      game.currentUser =
+        game.teams[game.chess.turn()].players[
+          game.teams[game.chess.turn()].currentPlayer
+        ].name;
+
       player.canMakeMove = false;
       if (game.chess.game_over()) {
         game.state = "end";
         console.log("Game over!");
-      }
-      
-      else if (game.currentUser === 'computer') {
-        game.move(game.computerMove());
-        return game
+      } else if (game.currentUser === "computer") {
+        game.chess.move(game.computerMove());
+        game.incrementTurns();
+        game.changePlayer(player.team);
+        game.lastMove = JSON.stringify(move);
+        game.currentFen = game.chess.fen();
+        game.currentFenUrl = game.fenUrl(game.currentFen);
+            game.currentUser =
+        game.teams[game.chess.turn()].players[
+          game.teams[game.chess.turn()].currentPlayer
+        ].name;
+        console.log(game.currentUser);
+        return game;
       } else {
         return game;
       }
-     
-    
     }
-    
+
     return _private(move, player);
   }
 
