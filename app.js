@@ -43,6 +43,7 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
   } else if (functions.checkIfRightUser(user, game.currentUser.split("@")[1])) {
     return await say(alerts.notSamePlayer);
   } else if (functions.checkForValidMove(move, game, alerts, say === false)) {
+    
     return await say(
       messages.chessMove(game.move({ from: move[0], to: move[1] }))
     );

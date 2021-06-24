@@ -133,10 +133,11 @@ class Game {
         game.state = "end";
         console.log("Game over!");
       } else if (game.currentUser === "computer") {
-        game.chess.move(game.computerMove());
+        const computerMove = game.computerMove()
+        game.chess.move(computerMove);
         game.incrementTurns();
         game.changePlayer(player.team);
-        game.lastMove = JSON.stringify(move);
+        game.lastMove = 'Computer ' + computerMove;
         game.currentFen = game.chess.fen();
         game.currentFenUrl = game.fenUrl(game.currentFen);
             game.currentUser =
