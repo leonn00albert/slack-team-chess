@@ -64,7 +64,11 @@ const messages = {
         }
       }
     ]
-  })
+  }),
+  
+  showChess: games => {
+    
+  }
 };
 
 module.exports = messages;

@@ -45,10 +45,13 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
     return await say(alerts.notSamePlayer);
   }  else if (functions.checkForValidMove(move,game,alerts,say === false)) {
      return await say(messages.chessMove(game.move({from:move[0],to: move[1]})));
-
   }
+});
 
-  
+
+app.command("/show-chess", async ({ command, ack, body, say }) => {
+  await ack();
+  const user = body.user_name;
   
 });
 
