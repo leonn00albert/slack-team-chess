@@ -37,7 +37,7 @@ const messages = {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `${game.currentUser}> Your Turn`
+          text: `${game.currentUser} Your Turn`
         }
       }
     ]
@@ -48,7 +48,7 @@ const messages = {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `${game.message}`
+          text: `:chess_pawn:-X-X-X-X-X-X-  *${game.message}*  -X-X-X-X-X-X-:chess_pawn:`
         }
       },
       {
@@ -71,7 +71,7 @@ const messages = {
           type: "mrkdwn",
           text: `<${
             game.currentUser
-          }> Your Turn! Current Team: ${game.chess.turn()} Last Move: ${
+          }> Your Turn! *Current Team*: ${game.chess.turn()} *Last Move*: ${
             game.lastMove
           }`
         }

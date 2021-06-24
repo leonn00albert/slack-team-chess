@@ -127,7 +127,7 @@ class Game {
           game.teams[game.chess.turn()].currentPlayer
         ].name;
     game.message = "Game in progress.";
-        console.log(game)
+      
       player.canMakeMove = false;
       if (game.chess.in_checkmate()) {
         game.state = "end";
