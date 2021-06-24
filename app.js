@@ -55,25 +55,17 @@ app.command("/chess-show", async ({ command, ack, body, say }) => {
   const user = body.user_name;
   let action = body.text.toLowerCase().split(" ")[0];
   console.log(action);
-  if (action === "mygames") {
-    let myGames = [];
-    for (const id in games) {
-      if (
-        games[id].teams.w.players.some(player => Object.values(player).includes('@' + user)) ||
-        games[id].teams.b.players.some(player => Object.values(player).includes('@' + user))
-      ) {
-        myGames.push(games[id]);
-      }
-      
-      await say(messages.showChess(myGames));
-    }
-  } else if (action === "allgames") {
-    let allGames = [];
-    for (const id in games) {
-      allGames.push(games[id]);
-    }
-    await say(messages.showChess(allGames));
+  
+  if (Object.values(games).length === 0) {
+    return await say(alerts.noGames);
   }
+  else if(action) {
+    await say(messages.showChess(functions.showChessAction(action,games,user)));
+  }
+  else {
+    return await say(alerts.showChessNotValidInput);
+  }
+
 });
 
 (async () => {

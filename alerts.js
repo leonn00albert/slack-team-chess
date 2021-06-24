@@ -81,6 +81,29 @@ const alerts = {
         }
       }
     ]
+  },
+  
+    noGames: {
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: ":warning: No games started yet... start a game with /start-chess "
+        }
+      }
+    ]
+  },
+  showChessNotValidInput : {
+     blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: ":warning: Not a valid input! either try `mygames` or `allgames`"
+        }
+      }
+    ]
   }
 };
 

@@ -99,7 +99,29 @@ const functions = {
     }
     return _private();
     
+  },
+ showChessAction: (action, games, user) => {
+   if (action === "mygames") {
+    let myGames = [];
+    for (const id in games) {
+      if (
+        games[id].teams.w.players.some(player => Object.values(player).includes('@' + user)) ||
+        games[id].teams.b.players.some(player => Object.values(player).includes('@' + user))
+      ) {
+        myGames.push(games[id]);
+      }
+      return myGames
+    
+    }
+  } else if (action === "allgames") {
+    let allGames = [];
+    for (const id in games) {
+      allGames.push(games[id]);
+    }
+    return allGames;
+  
   }
+ }
 
 };
 module.exports = functions;
