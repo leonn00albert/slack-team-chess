@@ -128,13 +128,24 @@ class Game {
         ].name;
 
       player.canMakeMove = false;
-      if (game.chess.game_over()) {
+      if (game.chess.in_checkmate()) {
         game.state = "end";
         console.log("Game over!");
         return game;
+      } else if (game.chess.in_draw()) {
+        game.message = 
+        return { message: `Game Over! It's a draw!` };
+      } else if (game.chess.in_stalemate()) {
+        game.message = `Game Over! It's a stalemate!`
+        return game;
+      } else if (game.chess.in_threefold_repetition()) {
+        game.message =`Game Over! due to threefold repetition!`
+        return game;
+      } else if (game.chess.insufficient_material()) {
+        return { message: `Game Over! Insufficient material!` };
       } else if (game.currentUser === "computer") {
         const computerMove = game.computerMove();
-    
+
         game.chess.move(computerMove);
         game.incrementTurns();
         game.changePlayer(game.chess.turn());
