@@ -31,7 +31,10 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
 app.command("/chess-move", async ({ command, ack, body, say }) => {
   await ack();
   const user = body.user_name;
+  
   const text = body.text.toLowerCase().split(" ");
+  
+  console.log(text + " " + user)
   const gameId = text[0];
   text.shift();
   const move = text;
