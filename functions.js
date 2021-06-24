@@ -87,7 +87,7 @@ const functions = {
     }
     return _private(game);
   },
-  checkForValidMove: (arr, game, alerts, say) => {
+  checkForValidMove: (arr, game, alerts, say,messages) => {
     const currentFen = game.currentFen;
     const [from, to] = arr;
     console.log(arr);
@@ -102,7 +102,9 @@ const functions = {
         await say(alerts.NotValidMove);
         return true;
       } else {
-        return false;
+        return false;  return await say(
+          messages.chessMove(game.move({ from: from, to: to }))
+    );
       }
     }
     return _private();
