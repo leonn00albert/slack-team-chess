@@ -31,7 +31,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
 app.command("/chess-move", async ({ command, ack, body, say }) => {
   await ack();
   const user = body.user_name;
-  const text = body.text.tolLowerCase().split(" ");
+  const text = body.text.toLowerCase().split(" ");
   const gameId = text[0];
   text.shift();
   const move = text;
@@ -59,12 +59,12 @@ app.command("/chess-show", async ({ command, ack, body, say }) => {
     let myGames = [];
     for (const id in games) {
       if (
-        games[id].teams.w.players.includes({ name: "@" + user }) ||
-        games[id].teams.b.players.includes({ name: "@" + user })
+        games[id].teams.w.players.some(player => Object.values(player).includes('@' + user)) ||
+        games[id].teams.b.players.some(player => Object.values(player).includes('@' + user))
       ) {
         myGames.push(games[id]);
       }
-      console.log(myGames)
+      
       await say(messages.showChess(myGames));
     }
   } else if (action === "allgames") {
