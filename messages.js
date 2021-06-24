@@ -76,9 +76,7 @@ const messages = {
             game =>
               `Game ID: ${game.id}* - *Turn: ${
                 game.turns
-              }* - *Team: ${game.chess
-                .turn()
-                .toUpperCase()}* Current Player: ${game.currentUser.toUpperCase()} state: ${game.state.toUpperCase()}\n`
+              }* -  *Current Player*: ${game.currentUser.toUpperCase()} state: ${game.state.toUpperCase()}\n`
           )}`
         }
       }
