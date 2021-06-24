@@ -28,15 +28,17 @@ const functions = {
   checkforComputer: arr => {
     const selectedPlayers = arr;
     function _private(selectedPlayers) {
-      return selectedPlayers.includes('<computer>');
+      return selectedPlayers.includes("<computer>");
     }
-    
-    return _private(selectedPlayers)
+
+    return _private(selectedPlayers);
   },
 
   validateStartChess: (arr, alerts, say, messages, games, Game, chess) => {
     const selectedPlayers = arr;
-    const humanPlayers = selectedPlayers.filter(player => player !== 'computer')
+    const humanPlayers = selectedPlayers.filter(
+      player => player !== "computer"
+    );
     async function _private(selectedPlayers) {
       if (functions.checkEnoughPlayers(selectedPlayers)) {
         return await say(alerts.notEnoughplayers);
@@ -87,7 +89,7 @@ const functions = {
     }
     return _private(game);
   },
-  checkForValidMove: (arr, game, alerts, say,messages) => {
+  checkForValidMove: (arr, game, alerts, say, messages) => {
     const currentFen = game.currentFen;
     const [from, to] = arr;
     console.log(arr);
@@ -98,12 +100,9 @@ const functions = {
       console.log(currentFen);
       console.log(game.chess.fen());
       if (game.chess.fen() === currentFen) {
-       return await say(alerts.NotValidMove);
-      
+        return await say(alerts.NotValidMove);
       } else {
-       return await say(
-          messages.chessMove(game.move({ from: from, to: to }))
-    );
+        return await say(messages.chessMove(game.move({ from: from, to: to })));
       }
     }
     return _private();

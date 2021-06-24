@@ -126,26 +126,32 @@ class Game {
         game.teams[game.chess.turn()].players[
           game.teams[game.chess.turn()].currentPlayer
         ].name;
-
+    game.message = "Game in progress.";
+        console.log(game)
       player.canMakeMove = false;
       if (game.chess.in_checkmate()) {
         game.state = "end";
+         game.message = "Check Mate!";
         console.log("Game over!");
         return game;
       } else if (game.chess.in_draw()) {
-        game.message = 
-        return { message: `Game Over! It's a draw!` };
+        game.state = "end";
+        game.message = `Game Over! It's a draw!`;
+        return game;
       } else if (game.chess.in_stalemate()) {
-        game.message = `Game Over! It's a stalemate!`
+           game.state = "end";
+        game.message = `Game Over! It's a stalemate!`;
         return game;
       } else if (game.chess.in_threefold_repetition()) {
-        game.message =`Game Over! due to threefold repetition!`
+            game.state = "end";
+        game.message = `Game Over! due to threefold repetition!`;
         return game;
       } else if (game.chess.insufficient_material()) {
-        return { message: `Game Over! Insufficient material!` };
+            game.state = "end";
+        game.message = `Game Over! Insufficient material!`;
+        return game;
       } else if (game.currentUser === "computer") {
         const computerMove = game.computerMove();
-
         game.chess.move(computerMove);
         game.incrementTurns();
         game.changePlayer(game.chess.turn());
@@ -157,10 +163,14 @@ class Game {
             game.teams[game.chess.turn()].currentPlayer
           ].name;
         console.log(game.currentUser);
+        game.message = "Computer move";
         return game;
       } else {
-        return game;
+    
+       
+        
       }
+       return game;
     }
 
     return _private(move, player);
