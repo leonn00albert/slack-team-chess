@@ -31,42 +31,49 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
 app.command("/chess-move", async ({ command, ack, body, say }) => {
   await ack();
   const user = body.user_name;
-  const text =  body.text.tolLowerCase().split(" ");
+  const text = body.text.tolLowerCase().split(" ");
   const gameId = text[0];
   text.shift();
-  const move = text
+  const move = text;
   const game = games[gameId];
 
   // Acknowledge command request
   if (!functions.checkForGameId(gameId)) {
     return await say(alerts.notValidGameId);
   } else if (functions.checkIfRightUser(user, game.currentUser.split("@")[1])) {
-    console.log(user  + " " + game.currentUser)
+    console.log(user + " " + game.currentUser);
     return await say(alerts.notSamePlayer);
-  }  else if (functions.checkForValidMove(move,game,alerts,say === false)) {
-     return await say(messages.chessMove(game.move({from:move[0],to: move[1]})));
+  } else if (functions.checkForValidMove(move, game, alerts, say === false)) {
+    return await say(
+      messages.chessMove(game.move({ from: move[0], to: move[1] }))
+    );
   }
 });
-
 
 app.command("/chess-show", async ({ command, ack, body, say }) => {
   await ack();
   const user = body.user_name;
-  let action = body.text.toLowerCase().split(" ");
-  console.log(action)
-   if(action === 'mygames') {
-     let MyGames = [];
-     for (const id in games){
-       if( games[id].teams.w.players.includes({name: '@' + user})|| games[id].teams.b.players.include({name: '@' + user} )) {
-        MyGames.push(games[id]);                              
-                                           }
-     }
-   }
-    else if (action === 'allgames') {
-      await say(messages.showChess(games))
+  let action = body.text.toLowerCase().split(" ")[0];
+  console.log(action);
+  if (action === "mygames") {
+    let myGames = [];
+    for (const id in games) {
+      if (
+        games[id].teams.w.players.includes({ name: "@" + user }) ||
+        games[id].teams.b.players.includes({ name: "@" + user })
+      ) {
+        myGames.push(games[id]);
+      }
+      console.log(myGames)
+      await say(messages.showChess(myGames));
     }
-     
-   
+  } else if (action === "allgames") {
+    let allGames = [];
+    for (const id in games) {
+      allGames.push(games[id]);
+    }
+    await say(messages.showChess(allGames));
+  }
 });
 
 (async () => {
