@@ -116,11 +116,12 @@ class Game {
       game.currentUser =  game.teams[game.chess.turn()].players[
               game.teams[game.chess.turn()].currentPlayer
             ].name
+      player.canMakemove = false;
       if (game.chess.game_over()) {
         game.state = "end";
         console.log("Game over!");
       }
-      console.log(game)
+      console.log(player)
       return game;
     }
     
