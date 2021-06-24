@@ -28,8 +28,7 @@ const functions = {
   checkforComputer: arr => {
     const selectedPlayers = arr;
     function _private(selectedPlayers) {
-      const firstLetters = selectedPlayers.map(player => player.charAt(0));
-      return firstLetters.every(letter => letter === "@") ? false : true;
+      return selectedPlayers.includes('<computer>');
     }
     
     return _private(selectedPlayers)
@@ -37,10 +36,11 @@ const functions = {
 
   validateStartChess: (arr, alerts, say, messages, games, Game, chess) => {
     const selectedPlayers = arr;
+    const humanPlayers = selectedPlayers.filter(player => player !== 'computer')
     async function _private(selectedPlayers) {
       if (functions.checkEnoughPlayers(selectedPlayers)) {
         return await say(alerts.notEnoughplayers);
-      } else if (functions.checkPlayersTagged(selectedPlayers)) {
+      } else if (functions.checkPlayersTagged(humanPlayers)) {
         return await say(alerts.playersNotTagged);
       } else if (functions.checkDuplicatePlayers(selectedPlayers)) {
         return await say(alerts.duplicatedPlayers);

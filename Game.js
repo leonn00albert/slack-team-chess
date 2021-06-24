@@ -127,11 +127,13 @@ class Game {
       game.currentUser =  game.teams[game.chess.turn()].players[
               game.teams[game.chess.turn()].currentPlayer
             ].name
+      console.log(game.currentUser)
       player.canMakeMove = false;
       if (game.chess.game_over()) {
         game.state = "end";
         console.log("Game over!");
       }
+      
       else if (game.currentUser === 'computer') {
         game.move(game.computerMove());
         return game

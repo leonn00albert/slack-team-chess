@@ -36,7 +36,7 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
   text.shift();
   const move = text;
   const game = games[gameId];
-  console.log(functions.canMakeMove(game))
+
   // Acknowledge command request
   if (!functions.checkForGameId(gameId)) {
     return await say(alerts.notValidGameId);
