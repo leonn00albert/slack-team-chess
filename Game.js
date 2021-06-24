@@ -72,11 +72,10 @@ class Game {
     const game = this;
     function _private(game) {
       const moves = game.chess.moves();
-      const move =moves[Math.floor(Math.random() * moves.length)]; 
+      const move = moves[Math.floor(Math.random() * moves.length)];
       console.log("----computer move----");
       console.log(move);
       return move;
-     
     }
     return _private(game);
   }
@@ -132,18 +131,19 @@ class Game {
       if (game.chess.game_over()) {
         game.state = "end";
         console.log("Game over!");
+        return game;
       } else if (game.currentUser === "computer") {
-        const computerMove = game.computerMove()
+        const computerMove = game.computerMove();
         game.chess.move(computerMove);
         game.incrementTurns();
-        game.changePlayer(player.team);
-        game.lastMove = 'Computer ' + computerMove;
+        game.changePlayer(game.chess.turn());
+        game.lastMove = "Computer " + computerMove;
         game.currentFen = game.chess.fen();
         game.currentFenUrl = game.fenUrl(game.currentFen);
-            game.currentUser =
-        game.teams[game.chess.turn()].players[
-          game.teams[game.chess.turn()].currentPlayer
-        ].name;
+        game.currentUser =
+          game.teams[game.chess.turn()].players[
+            game.teams[game.chess.turn()].currentPlayer
+          ].name;
         console.log(game.currentUser);
         return game;
       } else {
