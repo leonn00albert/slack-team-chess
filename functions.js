@@ -25,7 +25,15 @@ const functions = {
 
     return _private(selectedPlayers);
   },
-  
+  checkforComputer: arr => {
+    const selectedPlayers = arr;
+    function _private(selectedPlayers) {
+      const firstLetters = selectedPlayers.map(player => player.charAt(0));
+      return firstLetters.every(letter => letter === "@") ? false : true;
+    }
+    
+    return _private(selectedPlayers)
+  },
 
   validateStartChess: (arr, alerts, say, messages, games, Game, chess) => {
     const selectedPlayers = arr;
@@ -38,9 +46,12 @@ const functions = {
         return await say(alerts.duplicatedPlayers);
       } else {
         const gameId = Object.keys(games).length;
-        games[gameId] = new Game(chess,gameId, functions.prepPlayers(selectedPlayers));
+        games[gameId] = new Game(
+          chess,
+          gameId,
+          functions.prepPlayers(selectedPlayers)
+        );
         await say(messages.startChess(games[gameId]));
-       
       }
     }
     return _private(selectedPlayers);
@@ -54,74 +65,71 @@ const functions = {
     }
     return _private(selectedPlayers);
   },
-  
+
   checkIfRightUser: (user, gameUser) => {
     function _private(user, game) {
-      return user !== gameUser
+      return user !== gameUser;
     }
     return _private(user, gameUser);
   },
-  checkForGameId: (gameId) => {
+  checkForGameId: gameId => {
     function _private(gameId) {
-      const numbers = [0,1,2,3,4,5,6,7,8,9];
-      return numbers.some(num => num == gameId)
-
+      const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      return numbers.some(num => num == gameId);
     }
     return _private(gameId);
   },
-    canMakeMove: (game) => {
+  canMakeMove: game => {
     function _private(game) {
       const index = game.chess.turn();
       const key = game.teams;
-      return key[index].players[key[index].currentPlayer].canMakeMove
+      return key[index].players[key[index].currentPlayer].canMakeMove;
     }
     return _private(game);
   },
-  checkForValidMove: (arr,game,alerts,say) => {
+  checkForValidMove: (arr, game, alerts, say) => {
     const currentFen = game.currentFen;
-    const [from,to] = arr;
+    const [from, to] = arr;
     console.log(arr);
     async function _private() {
-      console.log(from + " " + to)
-      game.chess.move({from: from, to: to})
-      game.chess.fen()
+      console.log(from + " " + to);
+      game.chess.move({ from: from, to: to });
+      game.chess.fen();
       console.log(currentFen);
-      console.log( game.chess.fen());
+      console.log(game.chess.fen());
       if (game.chess.fen() === currentFen) {
         game.chess.undo();
-         await say(alerts.NotValidMove);
-        return true
-      }else {
-        return false
-        
+        await say(alerts.NotValidMove);
+        return true;
+      } else {
+        return false;
       }
-     
     }
     return _private();
-    
   },
- showChessAction: (action, games, user) => {
-   if (action === "mygames") {
-    let myGames = [];
-    for (const id in games) {
-      if (
-        games[id].teams.w.players.some(player => Object.values(player).includes('@' + user)) ||
-        games[id].teams.b.players.some(player => Object.values(player).includes('@' + user))
-      ) {
-        myGames.push(games[id]);
+  showChessAction: (action, games, user) => {
+    if (action === "mygames") {
+      let myGames = [];
+      for (const id in games) {
+        if (
+          games[id].teams.w.players.some(player =>
+            Object.values(player).includes("@" + user)
+          ) ||
+          games[id].teams.b.players.some(player =>
+            Object.values(player).includes("@" + user)
+          )
+        ) {
+          myGames.push(games[id]);
+        }
+        return myGames;
       }
-      return myGames
-    
+    } else if (action === "allgames") {
+      let allGames = [];
+      for (const id in games) {
+        allGames.push(games[id]);
+      }
+      return allGames;
     }
-  } else if (action === "allgames") {
-    let allGames = [];
-    for (const id in games) {
-      allGames.push(games[id]);
-    }
-    return allGames;
-  
   }
- }
-
 };
 module.exports = functions;

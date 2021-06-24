@@ -67,6 +67,17 @@ class Game {
     }
     return _private(players);
   }
+  
+  
+  computerMove() {
+    const game = this;
+    function _private(game){
+      const moves = game.chess.moves()
+      const move = Math.floor(Math.random() * moves.length);
+      return move;
+    }
+    return _private(game);
+  }
 
   createTeams(arr) {
     const teams = this.teams;
@@ -105,7 +116,7 @@ class Game {
     ];
 
     
-      console.log(move)
+
     function _private(move, player) {
       game.chess.move(move)
       game.incrementTurns();
@@ -121,8 +132,14 @@ class Game {
         game.state = "end";
         console.log("Game over!");
       }
-      console.log(player)
-      return game;
+      else if (game.currentUser === 'computer') {
+        game.move(game.computerMove());
+        return game
+      } else {
+        return game;
+      }
+     
+    
     }
     
     return _private(move, player);
