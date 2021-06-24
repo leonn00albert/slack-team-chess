@@ -6,7 +6,11 @@ const functions = require("./functions");
 const alerts = require("./alerts");
 const messages = require("./messages");
 const mongoose = require('mongoose');
-mongoose.connect(`mongodb+srv://leon:${process.env.MONGO_KEY}@cluster0.umurs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true}`);
+mongoose.connect(`mongodb+srv://leon:${process.env.MONGO_KEY}@cluster0.umurs.mongodb.net/teamchess?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true}`);
+
+const Cat = mongoose.model('Game', { games: {} });
+
+
 const chess = new Chess();
 const games = {};
 const app = new App({
