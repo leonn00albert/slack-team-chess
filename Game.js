@@ -130,7 +130,7 @@ class Game {
       
       player.canMakeMove = false;
       if (game.chess.in_checkmate()) {
-        game.state = "checkmate";
+         game.state = "checkmate";
          game.message = "Check Mate!";
         console.log("Game over!");
         return game;

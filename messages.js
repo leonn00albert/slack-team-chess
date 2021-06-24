@@ -43,7 +43,7 @@ const messages = {
     ]
   }),
   chessMove: game => {
-    if (game.state == "checkmate") {
+    if (game.state === "checkmate") {
       return {
         blocks: [
           {
@@ -55,8 +55,13 @@ const messages = {
           },
           {
             type: "image",
-            image_url: "https://imgflip.com/i/5ednb4",
-            alt_text: "Check Mate kitty"
+            image_url: game.currentFenUrl,
+            alt_text: "chessboard"
+          },
+          {
+            type: "image",
+            image_url: "https://i.imgflip.com/5ednb4.jpg",
+            alt_text: "CheckMatekitty"
           }
         ]
       };
