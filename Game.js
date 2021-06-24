@@ -11,6 +11,7 @@ class Game {
         currentPlayer: 0
       }
     };
+    this.state= "active"
     this.id = id;
     this.currentFen = "";
     this.currentFenUrl = "";
@@ -116,6 +117,7 @@ class Game {
               game.teams[game.chess.turn()].currentPlayer
             ].name
       if (game.chess.game_over()) {
+        game.state = "end";
         console.log("Game over!");
       }
       console.log(game)

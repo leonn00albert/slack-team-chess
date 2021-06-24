@@ -48,7 +48,7 @@ const messages = {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `*Game ID: ${game.id}* - *Turn: ${game.turns}* - *Team: ${game.chess.turn().toUpperCase()}*`
+          text: `*Game ID: ${game.id}* - *Turn: ${game.turns}* - *Team: ${game.chess.turn().toUpperCase()}* Current Player: ${game.currentUser.toUpperCase()} Current Player: ${game.currentUser.toUpperCase()}**`
         }
       },
       {

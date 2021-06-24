@@ -31,7 +31,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
 app.command("/chess-move", async ({ command, ack, body, say }) => {
   await ack();
   const user = body.user_name;
-  const text =  body.text.split(" ");
+  const text =  body.text.tolLowerCase().split(" ");
   const gameId = text[0];
   text.shift();
   const move = text
@@ -52,7 +52,20 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
 app.command("/show-chess", async ({ command, ack, body, say }) => {
   await ack();
   const user = body.user_name;
-  
+  const action = body.text.toLowerCase().split(" ");
+   if(action = 'myGames') {
+     const MyGames = [];
+     for (const id in games){
+       if( games[id].teams.w.players.include({name: '@' + user})|| games[id].teams.b.players.include({name: '@' + user} )) {
+        MyGames.push(games[id]);                              
+                                           }
+     }
+   }
+    else if (action = 'allGames') {
+      await say(messages.showChess(games))
+    }
+     
+   
 });
 
 (async () => {
