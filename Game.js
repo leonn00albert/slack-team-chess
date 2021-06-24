@@ -72,8 +72,11 @@ class Game {
     const game = this;
     function _private(game) {
       const moves = game.chess.moves();
-      const move = Math.floor(Math.random() * moves.length);
+      const move =moves[Math.floor(Math.random() * moves.length)]; 
+      console.log("----computer move----");
+      console.log(move);
       return move;
+     
     }
     return _private(game);
   }
