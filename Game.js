@@ -134,6 +134,7 @@ class Game {
         return game;
       } else if (game.currentUser === "computer") {
         const computerMove = game.computerMove();
+    
         game.chess.move(computerMove);
         game.incrementTurns();
         game.changePlayer(game.chess.turn());
