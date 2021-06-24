@@ -43,10 +43,7 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
   } else if (functions.checkIfRightUser(user, game.currentUser.split("@")[1])) {
     return await say(alerts.notSamePlayer);
   } else {
-    functions.checkForValidMove(move, game, alerts, say, messages); 
-  } 
-    
-  
+    functions.checkForValidMove(move, game, alerts, say, messages);
   }
 });
 
@@ -55,17 +52,16 @@ app.command("/chess-show", async ({ command, ack, body, say }) => {
   const user = body.user_name;
   let action = body.text.toLowerCase().split(" ")[0];
   console.log(action);
-  
+
   if (Object.values(games).length === 0) {
     return await say(alerts.noGames);
-  }
-  else if(action) {
-    await say(messages.showChess(functions.showChessAction(action,games,user)));
-  }
-  else {
+  } else if (action) {
+    await say(
+      messages.showChess(functions.showChessAction(action, games, user))
+    );
+  } else {
     return await say(alerts.showChessNotValidInput);
   }
-
 });
 
 (async () => {

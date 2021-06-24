@@ -99,10 +99,10 @@ const functions = {
       console.log(game.chess.fen());
       if (game.chess.fen() === currentFen) {
         game.chess.undo();
-        await say(alerts.NotValidMove);
-        return true;
+       return await say(alerts.NotValidMove);
+      
       } else {
-        return false;  return await say(
+       return await say(
           messages.chessMove(game.move({ from: from, to: to }))
     );
       }
