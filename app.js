@@ -5,11 +5,11 @@ const Game = require("./Game");
 const functions = require("./functions");
 const alerts = require("./alerts");
 const messages = require("./messages");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const GameModel = require("./game-model");
-mongoose.connect(`mongodb+srv://leon:${process.env.MONGO_KEY}@cluster0.umurs.mongodb.net/teamchess?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true}`);
-
-
+mongoose.connect(
+  `mongodb+srv://leon:${process.env.MONGO_KEY}@cluster0.umurs.mongodb.net/teamchess?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true}`
+);
 
 const chess = new Chess();
 const games = {};
@@ -22,41 +22,61 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
   // Acknowledge command request
   await ack();
   const selectedPlayers = body.text.split(" ");
-  functions.validateStartChess(
-    selectedPlayers,
-    alerts,
-    say,
-    messages,
-    games,
-    Game,
-    chess
-  );
-  const mongoGame = new Game(games);
-mongoGame.save();
+  await GameModel.find({})
+    .then(foundGames => {
+      functions.validateStartChess(
+        selectedPlayers,
+        alerts,
+        say,
+        messages,
+        games,
+        Game,
+        foundGames
+      );
+    })
+    .then(game => {
+      console.log(game)
+      const mongoGame = new GameModel(game);
+      console.log(mongoGame)
+    console.log('---------------')
+      mongoGame.save();
+  }
+    );
+
+
+
 });
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {
   await ack();
   const user = body.user_name;
-  
+
   const text = body.text.toLowerCase().split(" ");
-  
-  console.log(text + " " + user)
+
+  console.log(text + " " + user);
   const gameId = text[0];
   text.shift();
   const move = text;
-  const game = games[gameId];
 
-  // Acknowledge command request
-  if (!functions.checkForGameId(gameId)) {
-    return await say(alerts.notValidGameId);
-  } else if (functions.checkIfRightUser(user, game.currentUser.split("@")[1])) {
-    return await say(alerts.notSamePlayer);
-  } else {
-    functions.checkForValidMove(move, game, alerts, say, messages);
-  }
+
+  // Acknowledge cgitommand request
+
+  GameModel.find({ gameID: parseInt(gameId) })
+    .then(async foundGame => {
+      
+      if (!functions.checkForGameId(gameId)) {
+        return await say(alerts.notValidGameId);
+      } else if (
+  
+        functions.checkIfRightUser(user, foundGame.currentUser.split("@")[1])
+      ) {
+        return await say(alerts.notSamePlayer);
+      } else {
+        functions.checkForValidMove(move, foundGame, alerts, say, messages);
+      }
+    })
+    .then(updateGame => GameModel.findOneAndUpdate({ id: gameId }, updateGame));
 });
-
 app.command("/chess-show", async ({ command, ack, body, say }) => {
   await ack();
   const user = body.user_name;
