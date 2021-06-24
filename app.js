@@ -31,6 +31,8 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
     Game,
     chess
   );
+  const mongoGame = new Game(games);
+mongoGame.save();
 });
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {
