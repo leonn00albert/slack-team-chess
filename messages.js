@@ -43,51 +43,62 @@ const messages = {
     ]
   }),
   chessMove: game => {
-        if(game .state == checkmate) {
-      return ({
-           blocks: [
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `:chess_pawn:-X-X-X-X-X-X-  *${game.message}*  -X-X-X-X-X-X-:chess_pawn:`
-        }
-      },
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `*Game ID: ${game.id}* - *Turn: ${
-            game.turns
-          }* - *Team: ${game.chess.turn().toUpperCase()}*`
-        }
-      },
-      {
-        type: "image",
-        image_url: game.currentFenUrl,
-        alt_text: "chessboard"
-      },
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `<${
-            game.currentUser
-          }> Your Turn! *Current Team*: ${game.chess.turn()} *Last Move*: ${
-            game.lastMove
-          }`
-        }
-      }
-    ]
-      })
+    if (game.state == "checkmate") {
+      return {
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `:chess_pawn:-X-X-X-X-X-X-  *${game.message}*  -X-X-X-X-X-X-:chess_pawn:`
+            }
+          },
+          {
+            type: "image",
+            image_url: "https://imgflip.com/i/5ednb4",
+            alt_text: "Check Mate kitty"
+          }
+        ]
+      };
     } else {
       return {
-        
-      }
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `:chess_pawn:-X-X-X-X-X-X-  *${game.message}*  -X-X-X-X-X-X-:chess_pawn:`
+            }
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `*Game ID: ${game.id}* - *Turn: ${
+                game.turns
+              }* - *Team: ${game.chess.turn().toUpperCase()}*`
+            }
+          },
+          {
+            type: "image",
+            image_url: game.currentFenUrl,
+            alt_text: "chessboard"
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `<${
+                game.currentUser
+              }> Your Turn! *Current Team*: ${game.chess.turn()} *Last Move*: ${
+                game.lastMove
+              }`
+            }
+          }
+        ]
+      };
     }
-
- 
-  }),
+  },
 
   showChess: games => ({
     blocks: [
@@ -104,7 +115,7 @@ const messages = {
         }
       }
     ]
-  }
+  })
 };
 
 module.exports = messages;

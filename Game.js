@@ -130,24 +130,24 @@ class Game {
       
       player.canMakeMove = false;
       if (game.chess.in_checkmate()) {
-        game.state = "end";
+        game.state = "checkmate";
          game.message = "Check Mate!";
         console.log("Game over!");
         return game;
       } else if (game.chess.in_draw()) {
-        game.state = "end";
+        game.state = "draw";
         game.message = `Game Over! It's a draw!`;
         return game;
       } else if (game.chess.in_stalemate()) {
-           game.state = "end";
+           game.state = "draw";
         game.message = `Game Over! It's a stalemate!`;
         return game;
       } else if (game.chess.in_threefold_repetition()) {
-            game.state = "end";
+            game.state = "draw";
         game.message = `Game Over! due to threefold repetition!`;
         return game;
       } else if (game.chess.insufficient_material()) {
-            game.state = "end";
+            game.state = "draw";
         game.message = `Game Over! Insufficient material!`;
         return game;
       } else if (game.currentUser === "computer") {
