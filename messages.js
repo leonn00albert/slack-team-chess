@@ -42,8 +42,10 @@ const messages = {
       }
     ]
   }),
-  chessMove: game => ({
-    blocks: [
+  chessMove: game => {
+        if(game .state == checkmate) {
+      return ({
+           blocks: [
       {
         type: "section",
         text: {
@@ -63,7 +65,7 @@ const messages = {
       {
         type: "image",
         image_url: game.currentFenUrl,
-        alt_text: "inspiration"
+        alt_text: "chessboard"
       },
       {
         type: "section",
@@ -77,6 +79,14 @@ const messages = {
         }
       }
     ]
+      })
+    } else {
+      return {
+        
+      }
+    }
+
+ 
   }),
 
   showChess: games => ({
@@ -94,7 +104,7 @@ const messages = {
         }
       }
     ]
-  })
+  }
 };
 
 module.exports = messages;
