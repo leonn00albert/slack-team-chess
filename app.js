@@ -75,13 +75,11 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
     } else if (functions.checkIfRightUser(user, currentUser)) {
       return await say(alerts.notSamePlayer);
     } else {
+      console.log('-----move-----')
       functions
         .checkForValidMove(move, game, alerts, say, messages)
-        .then(game => {
-          chessGame.findOneAndUpdate({ id: game.id }, function(
-            err,
-            game
-          ) {console.log(game)});
+        .then(newGame => {
+          chessGame.findOneAndReplace({ id: game.id },newGame)
         });
     }
   }

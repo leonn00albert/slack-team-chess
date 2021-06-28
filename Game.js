@@ -148,6 +148,9 @@ class Game {
           game.teams["b"].currentPlayer += 1;
         }
       }
+      console.log('---old user----')
+          console.log('---old user----')
+       console.log('---new user----')
       game.currentUser =
         game.teams[chess.turn()].players[
           game.teams[chess.turn()].currentPlayer
@@ -191,6 +194,7 @@ class Game {
         game.message = "Computer move";
         return game;
       } else {
+        return game;
       }
       return game;
     }
