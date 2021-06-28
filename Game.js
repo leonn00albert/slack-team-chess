@@ -104,7 +104,7 @@ class Game {
     const fen = str;
 
     function _private(fen) {
-      return `http://www.fen-to-image.com/image/${Game.parseFen(fen)}`;
+      return `http://www.fen-to-image.com/image/36/double/coords/${Game.parseFen(fen)}`;
     }
     return _private(fen);
   }
