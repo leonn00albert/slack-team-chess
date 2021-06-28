@@ -153,7 +153,6 @@ class Game {
           game.teams[chess.turn()].currentPlayer
         ].name;
       game.message = "Game in progress.";
-
       player.canMakeMove = false;
       if (chess.in_checkmate()) {
         game.state = "checkmate";

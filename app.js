@@ -50,13 +50,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
     const selectedPlayers = body.text.split(" ");
     console.log(selectedPlayers);
     functions
-      .validateStartChess(
-        selectedPlayers,
-        alerts,
-        say,
-        messages,
-        gameId
-      )
+      .validateStartChess(selectedPlayers, alerts, say, messages, gameId)
       .then(game => {
         const newChessGame = new chessGame(game);
         newChessGame.save();
@@ -75,21 +69,25 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
   text.shift();
   const move = text;
   async function makeMove(game) {
-    const currentUser = game.currentUser.split("@")[1];    // Acknowledge command request
+    const currentUser = game.currentUser.split("@")[1]; // Acknowledge command request
     if (!functions.checkForGameId(gameId)) {
       return await say(alerts.notValidGameId);
-    } else if (
-     functions.checkIfRightUser(user, currentUser)
-    ) {
+    } else if (functions.checkIfRightUser(user, currentUser)) {
       return await say(alerts.notSamePlayer);
-    }  else {
-      
-      functions.checkForValidMove(move, game, alerts, say, messages);
+    } else {
+      functions
+        .checkForValidMove(move, game, alerts, say, messages)
+        .then(game => {
+          chessGame.findOneAndUpdate({ id: game.id }, function(
+            err,
+            game
+          ) {console.log(game)});
+        });
     }
   }
 
   chessGame.find({ id: gameId }, function(err, foundGame) {
-    console.log(foundGame)
+    console.log(foundGame);
     makeMove(foundGame[0]);
   });
 });
