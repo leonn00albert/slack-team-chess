@@ -56,8 +56,8 @@ class Game {
       game.currentFen =
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
       game.startingDate = Game.getCurrentDate();
-      game.currentFenUrl = Game.fenUrl(game.currentFen);
       game.turn = "w";
+      game.currentFenUrl = Game.fenUrl(game.currentFen, game.turn);
       return game;
     }
     return _private(players);
@@ -106,20 +106,18 @@ class Game {
     }
     return _private(players);
   }
-  static fenUrl(str) {
+  static fenUrl(str,turn) {
     const fen = str;
 
-    function _private(fen,turn) {
-      
-      if(turn == 'w'){
-         return `https://chessboardimage.com/${fen}.png`
-      }else {
-        return `https://chessboardimage.com/${fen}-flip.png`
+    function _private(fen, turn) {
+      if (turn === "w") {
+        return `https://chessboardimage.com/${fen}.png`;
+      } else {
+        return `https://chessboardimage.com/${fen}-flip.png`;
       }
       // return `http://www.fen-to-image.com/image/36/double/coords/${Game.parseFen(fen)}`;
-     
     }
-    return _private(fen);
+    return _private(fen,turn);
   }
 
   static move(obj, game) {
@@ -133,7 +131,7 @@ class Game {
       game.turn = chess.turn();
       game.lastMove = JSON.stringify(move);
       game.currentFen = chess.fen();
-      game.currentFenUrl = Game.fenUrl(game.currentFen,game.turn);
+      game.currentFenUrl = Game.fenUrl(game.currentFen, game.turn);
       if (chess.turn() === "w") {
         if (
           game.teams["w"].currentPlayer ===
@@ -153,15 +151,15 @@ class Game {
           game.teams["b"].currentPlayer += 1;
         }
       }
-      console.log('---old user----')
-          console.log(game.currentUser);
-       console.log('---new user----')
+      console.log("---old user----");
+      console.log(game.currentUser);
+      console.log("---new user----");
       game.currentUser =
         game.teams[chess.turn()].players[
           game.teams[chess.turn()].currentPlayer
         ].name;
-      
-        console.log(game.currentUser);
+
+      console.log(game.currentUser);
       game.message = "Game in progress.";
       player.canMakeMove = false;
       if (chess.in_checkmate()) {
@@ -192,7 +190,7 @@ class Game {
         game.turns += 1;
         game.turn = chess.turn();
         game.currentFen = chess.fen();
-        game.currentFenUrl = Game.fenUrl(game.currentFen,game.turn);
+        game.currentFenUrl = Game.fenUrl(game.currentFen, game.turn);
         game.currentUser =
           game.teams[chess.turn()].players[
             game.teams[chess.turn()].currentPlayer
