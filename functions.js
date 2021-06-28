@@ -1,4 +1,6 @@
 const { Chess } = require("chess.js");
+const Game = require("./Game");
+
 const chess = new Chess();
 
 const functions = {
@@ -119,9 +121,9 @@ const functions = {
         return await say(alerts.NotValidMove);
       } else {
         const newFen = chess.fen();
-        game.currentFen = newFen;
-        
-        return await say(messages.chessMove(game));
+        return await say(
+          messages.chessMove(Game.move({ from: from, to: to }, game))
+        );
       }
     }
     return _private();

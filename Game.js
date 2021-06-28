@@ -1,6 +1,8 @@
+const { Chess } = require("chess.js");
+const chess = new Chess();
+
 class Game {
   constructor(chess, id, players) {
-    this.chess = chess;
     this.teams = {
       w: {
         players: [],
@@ -55,7 +57,7 @@ class Game {
   startGame(arr) {
     const players = arr;
     const game = this;
-    console.log('----start game----')
+    console.log("----start game----");
     console.log(players);
     function _private(players) {
       game.createTeams(players);
@@ -70,24 +72,23 @@ class Game {
     return _private(players);
   }
 
-  computerMove() {
-    const game = this;
-    function _private(game) {
-      const moves = game.chess.moves();
+  static computerMove() {
+    function _private() {
+      const moves = chess.moves();
       const move = moves[Math.floor(Math.random() * moves.length)];
       console.log("----computer move----");
       console.log(move);
       return move;
     }
-    return _private(game);
+    return _private();
   }
 
   createTeams(arr) {
     const teams = this.teams;
     const players = arr;
-        console.log('-------teams-----')
+    console.log("-------teams-----");
 
-    console.log(players)
+    console.log(players);
     function _private(players) {
       players.forEach((player, i) => {
         if (i % 2) {
@@ -105,76 +106,72 @@ class Game {
     }
     return _private(players);
   }
-  fenUrl(str) {
+  static fenUrl(str) {
     const fen = str;
 
     function _private(fen) {
-      return `http://www.fen-to-image.com/image/36/double/coords/${Game.parseFen(fen)}`;
+      return `http://www.fen-to-image.com/image/36/double/coords/${Game.parseFen(
+        fen
+      )}`;
     }
     return _private(fen);
   }
 
-  static move(obj,game) {
+  static move(obj, game) {
     const move = obj;
-    const player = this.teams[this.chess.turn()].players[
-      this.teams[this.chess.turn()].currentPlayer
-    ];
+    chess.load(game.currentFen());
+    const player =
+      game.teams[chess.turn()].players[game.teams[chess.turn()].currentPlayer];
     function _private(move, player) {
-      game.chess.move(move);
+      chess.move(move);
       game.incrementTurns();
       game.changePlayer(player.team);
       game.lastMove = JSON.stringify(move);
-      game.currentFen = game.chess.fen();
-      game.currentFenUrl = game.fenUrl(game.currentFen);
+      game.currentFen = chess.fen();
+      game.currentFenUrl = Game.fenUrl(game.currentFen);
       game.currentUser =
-        game.teams[game.chess.turn()].players[
-          game.teams[game.chess.turn()].currentPlayer
+        game.teams[chess.turn()].players[
+          game.teams[chess.turn()].currentPlayer
         ].name;
-    game.message = "Game in progress.";
-      
+      game.message = "Game in progress.";
+
       player.canMakeMove = false;
-      if (game.chess.in_checkmate()) {
-         game.state = "checkmate";
-         game.message = "Check Mate!";
+      if (chess.in_checkmate()) {
+        game.state = "checkmate";
+        game.message = "Check Mate!";
         console.log("Game over!");
         return game;
-      } else if (game.chess.in_draw()) {
+      } else if (chess.in_draw()) {
         game.state = "draw";
         game.message = `Game Over! It's a draw!`;
         return game;
-      } else if (game.chess.in_stalemate()) {
-           game.state = "draw";
+      } else if (chess.in_stalemate()) {
+        game.state = "draw";
         game.message = `Game Over! It's a stalemate!`;
         return game;
-      } else if (game.chess.in_threefold_repetition()) {
-            game.state = "draw";
+      } else if (chess.in_threefold_repetition()) {
+        game.state = "draw";
         game.message = `Game Over! due to threefold repetition!`;
         return game;
-      } else if (game.chess.insufficient_material()) {
-            game.state = "draw";
+      } else if (chess.insufficient_material()) {
+        game.state = "draw";
         game.message = `Game Over! Insufficient material!`;
         return game;
       } else if (game.currentUser === "computer") {
-        const computerMove = game.computerMove();
-        game.chess.move(computerMove);
+        const computerMove = Game.computerMove();
+        chess.move(computerMove);
         game.incrementTurns();
-        game.changePlayer(game.chess.turn());
-        game.lastMove = "Computer " + computerMove;
-        game.currentFen = game.chess.fen();
-        game.currentFenUrl = game.fenUrl(game.currentFen);
+        Game.fenUrl(game.currentFen);
         game.currentUser =
-          game.teams[game.chess.turn()].players[
-            game.teams[game.chess.turn()].currentPlayer
+          game.teams[chess.turn()].players[
+            game.teams[chess.turn()].currentPlayer
           ].name;
         console.log(game.currentUser);
         game.message = "Computer move";
         return game;
       } else {
-    
-       
-        
       }
-       return game;
+      return game;
     }
 
     return _private(move, player);

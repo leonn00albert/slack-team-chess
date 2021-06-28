@@ -35,7 +35,8 @@ const chessGameSchema = new mongoose.Schema({
   currentUser: String,
   turns: Number,
   startingDate: Number,
-  lastMove: String
+  lastMove: String,
+  message: String
 });
 const chessGame = mongoose.model("Game", chessGameSchema);
 
