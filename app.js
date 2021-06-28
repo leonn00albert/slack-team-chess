@@ -20,7 +20,7 @@ const app = new App({
 app.command("/start-chess", async ({ body, command, ack, say }) => {
   // Acknowledge command request
   await ack();
-
+  
   const selectedPlayers = body.text.split(" ");
   console.log(selectedPlayers);
   functions
@@ -55,17 +55,12 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
         lastMove: String
       });
       const chessGame = mongoose.model("Game", chessGameSchema);
-      const newGame = {
-        teams: game.teams,
-        gameId: 0,
-        state: "Active",
-        currentFen: game.currentFen,
-        currentFenUrl: game.currentFenUrl,
-        currentUser: game.currentUser,
-        turns: game.turns,
-        startingDate: 22,
-        lastMove: ""
-      };
+      async function(){
+        return const games = await chessGame.find({})
+      }
+     
+      game.gameId = games.length.toString();
+
       const newChessGame = new chessGame(game);
       newChessGame.save();
     });
