@@ -1,7 +1,7 @@
 Daily Team Chess 
 =================
 
-App for slack create with Bolt.js
+App for slack created with Bolt.js
 
 1. add the #daily-team-chess bot to your desired channel
 
