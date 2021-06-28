@@ -30,11 +30,12 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
     Game,
     chess
   );
-  const chessGame = mongoose.model("Game", chessGameSchema);
   const chessGameSchema = new mongoose.Schema({
     gameId: String
   });
-  const newChessGame = new Game({gameId: '02'});
+  const chessGame = mongoose.model("Game", chessGameSchema);
+
+  const newChessGame = new Game({ gameId: "02" });
   newChessGame.save();
 });
 
