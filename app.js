@@ -22,7 +22,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
   await ack();
 
   const selectedPlayers = body.text.split(" ");
-    console.log(selectedPlayers);
+  console.log(selectedPlayers);
   functions.validateStartChess(
     selectedPlayers,
     alerts,
@@ -30,14 +30,51 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
     messages,
     games,
     Game,
-    chess
+    chess,
+    function() {}
   );
   const chessGameSchema = new mongoose.Schema({
-    gameId: String
+    teams: {
+      w: {
+        players: Array,
+        currentPlayer: Number
+      },
+      b: {
+        players: Array,
+        currentPlayer: Number
+      }
+    },
+    gameId: String,
+    state: String,
+    currentFen: String,
+    currentFenUrl: String,
+    currentUser: String,
+    turns: Number,
+    startingDate: Number,
+    lastMove: String
   });
   const chessGame = mongoose.model("Game", chessGameSchema);
-
-  const newChessGame = new chessGame({ gameId: "02" });
+  const newGame = {
+    teams: {
+      w: {
+        players: [],
+        currentPlayer: 0
+      },
+      b: {
+        players: [],
+        currentPlayer: 0
+      }
+    },
+    gameId: 0,
+    state: "Active",
+    currentFen: "",
+    currentFenUrl: "",
+    currentUser: "",
+    turns: 0,
+    startingDate: 22,
+    lastMove: ""
+  };
+  const newChessGame = new chessGame(newGame);
   newChessGame.save();
 });
 
