@@ -114,9 +114,8 @@ class Game {
     return _private(fen);
   }
 
-  move(obj) {
+  static move(obj,game) {
     const move = obj;
-    const game = this;
     const player = this.teams[this.chess.turn()].players[
       this.teams[this.chess.turn()].currentPlayer
     ];

@@ -1,3 +1,6 @@
+const { Chess } = require("chess.js");
+const chess = new Chess();
+
 const functions = {
   checkDuplicatePlayers: arr => {
     let findDuplicates = arr =>
@@ -34,7 +37,16 @@ const functions = {
     return _private(selectedPlayers);
   },
 
-  validateStartChess: async (arr, alerts, say, messages, games, Game, chess,gameId) => {
+  validateStartChess: async (
+    arr,
+    alerts,
+    say,
+    messages,
+    games,
+    Game,
+    chess,
+    gameId
+  ) => {
     const selectedPlayers = arr;
     const humanPlayers = selectedPlayers.filter(
       player => player !== "computer"
@@ -47,15 +59,15 @@ const functions = {
       } else if (functions.checkDuplicatePlayers(selectedPlayers)) {
         return await say(alerts.duplicatedPlayers);
       } else {
-       console.log(gameId);
-       console.log(typeof(gameId))
+        console.log(gameId);
+        console.log(typeof gameId);
         games[gameId] = new Game(
           chess,
           gameId,
           functions.prepPlayers(selectedPlayers)
         );
         await say(messages.startChess(games[gameId]));
-        console.log(games[gameId])
+        console.log(games[gameId]);
         return games[gameId];
       }
     }
@@ -95,17 +107,21 @@ const functions = {
   checkForValidMove: (arr, game, alerts, say, messages) => {
     const currentFen = game.currentFen;
     const [from, to] = arr;
-    console.log(arr);
     async function _private() {
       console.log(from + " " + to);
-      game.chess.move({ from: from, to: to });
-      game.chess.fen();
-      console.log(currentFen);
-      console.log(game.chess.fen());
-      if (game.chess.fen() === currentFen) {
+      chess.load(currentFen);
+      chess.move({ from: from, to: to });
+
+      console.log(chess.fen());
+      console.log(game.currentFen);
+
+      if (chess.fen() === currentFen) {
         return await say(alerts.NotValidMove);
       } else {
-        return await say(messages.chessMove(game.move({ from: from, to: to })));
+        const newFen = chess.fen();
+        game.currentFen = newFen;
+        
+        return await say(messages.chessMove(game));
       }
     }
     return _private();
