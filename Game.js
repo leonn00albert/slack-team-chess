@@ -179,6 +179,7 @@ class Game {
       } else if (game.currentUser === "computer") {
         const computerMove = Game.computerMove();
         chess.load(game.currentFen);
+        chess.move(computerMove);
         game.turns += 1;
         game.currentFen = chess.fen();
         game.currentFenUrl = Game.fenUrl(game.currentFen);

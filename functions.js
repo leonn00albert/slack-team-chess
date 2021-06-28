@@ -94,7 +94,7 @@ const functions = {
   },
   canMakeMove: game => {
     function _private(game) {
-      const index = game.chess.turn();
+      const index = game.turn
       const key = game.teams;
       return key[index].players[key[index].currentPlayer].canMakeMove;
     }
