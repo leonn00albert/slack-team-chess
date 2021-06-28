@@ -20,7 +20,9 @@ const app = new App({
 app.command("/start-chess", async ({ body, command, ack, say }) => {
   // Acknowledge command request
   await ack();
+
   const selectedPlayers = body.text.split(" ");
+    console.log(selectedPlayers);
   functions.validateStartChess(
     selectedPlayers,
     alerts,
@@ -35,7 +37,7 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
   });
   const chessGame = mongoose.model("Game", chessGameSchema);
 
-  const newChessGame = new Game({ gameId: "02" });
+  const newChessGame = new chessGame({ gameId: "02" });
   newChessGame.save();
 });
 

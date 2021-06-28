@@ -55,6 +55,8 @@ class Game {
   startGame(arr) {
     const players = arr;
     const game = this;
+    console.log('----start game----')
+    console.log(players);
     function _private(players) {
       game.createTeams(players);
       game.currentUser = game.teams.w.players[0].name;
@@ -83,6 +85,9 @@ class Game {
   createTeams(arr) {
     const teams = this.teams;
     const players = arr;
+        console.log('-------teams-----')
+
+    console.log(players)
     function _private(players) {
       players.forEach((player, i) => {
         if (i % 2) {
