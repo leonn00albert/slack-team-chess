@@ -1,22 +1,15 @@
-Bolt app template
+Daily Team Chess 
 =================
 
-[Bolt](https://slack.dev/bolt) is our framework that lets you build JavaScript-based Slack apps in a flash.
+App for slack create with Bolt.js
 
-This project is a simple app template to make it easy to create your first Bolt app. Read our [Getting Started with Bolt](https://api.slack.com/start/building/bolt) guide for a more in-depth tutorial
+1. add the #daily-team-chess bot to your desired channel
 
-Your Project
-------------
+2. you can start a game by using slack command /start-chess @name @name2
 
-- `app.js` contains the primary Bolt app. It imports the Bolt package (`@slack/bolt`) and starts the Bolt app's server. It's where you'll add your app's listeners.
-- `.env` is where you'll put your Slack app's authorization token and signing secret.
-- The `examples/` folder contains a couple of other sample apps that you can peruse to your liking. They show off a few platform features that your app may want to use.
+3. you can make a move by using command /chess-move {{game id}} {{from}} {{to}} e.g /chess-move 0 e2 e4
 
+4. you can see a list of games by using /chess-show allgames or /chess-show mygames
 
-Read the [Getting Started guide](https://api.slack.com/start/building/bolt)
--------------------
+5. if you are lonely you can start a game with the computer but currently the computer is dumber than a bag of bricks....  to do so => /start-chess @yourname computer
 
-Read the [Bolt documentation](https://slack.dev/bolt)
--------------------
-
-\ ゜o゜)ノ
