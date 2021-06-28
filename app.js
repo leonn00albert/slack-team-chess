@@ -17,10 +17,38 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
+const chessGameSchema = new mongoose.Schema({
+  teams: {
+    w: {
+      players: Array,
+      currentPlayer: Number
+    },
+    b: {
+      players: Array,
+      currentPlayer: Number
+    }
+  },
+  gameId: String,
+  state: String,
+  currentFen: String,
+  currentFenUrl: String,
+  currentUser: String,
+  turns: Number,
+  startingDate: Number,
+  lastMove: String
+});
+const chessGame = mongoose.model("Game", chessGameSchema);
+
 app.command("/start-chess", async ({ body, command, ack, say }) => {
   // Acknowledge command request
   await ack();
-  
+  async function _private() {
+    const games = await chessGame.find({});
+    return games.length.toString();
+  }
+
+  const gameId = _private();
+
   const selectedPlayers = body.text.split(" ");
   console.log(selectedPlayers);
   functions
@@ -34,33 +62,6 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
       chess
     )
     .then(game => {
-      const chessGameSchema = new mongoose.Schema({
-        teams: {
-          w: {
-            players: Array,
-            currentPlayer: Number
-          },
-          b: {
-            players: Array,
-            currentPlayer: Number
-          }
-        },
-        gameId: String,
-        state: String,
-        currentFen: String,
-        currentFenUrl: String,
-        currentUser: String,
-        turns: Number,
-        startingDate: Number,
-        lastMove: String
-      });
-      const chessGame = mongoose.model("Game", chessGameSchema);
-      async function(){
-        return const games = await chessGame.find({})
-      }
-     
-      game.gameId = games.length.toString();
-
       const newChessGame = new chessGame(game);
       newChessGame.save();
     });
