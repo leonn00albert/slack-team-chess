@@ -149,12 +149,14 @@ class Game {
         }
       }
       console.log('---old user----')
-          console.log('---old user----')
+          console.log(game.currentUser);
        console.log('---new user----')
       game.currentUser =
         game.teams[chess.turn()].players[
           game.teams[chess.turn()].currentPlayer
         ].name;
+      
+        console.log(game.currentUser);
       game.message = "Game in progress.";
       player.canMakeMove = false;
       if (chess.in_checkmate()) {

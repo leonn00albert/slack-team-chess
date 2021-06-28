@@ -78,9 +78,7 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
       console.log('-----move-----')
       functions
         .checkForValidMove(move, game, alerts, say, messages)
-        .then(newGame => {
-          chessGame.findOneAndReplace({ id: game.id },newGame)
-        });
+       
     }
   }
 
