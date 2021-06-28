@@ -88,6 +88,7 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
   }
 
   chessGame.find({ id: gameId }, function(err, foundGame) {
+    console.log(foundGame)
     makeMove(foundGame);
   });
 });

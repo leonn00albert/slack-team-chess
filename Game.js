@@ -64,7 +64,7 @@ class Game {
       game.teams = Game.createTeams(players);
       game.state = 'Active';
       game.turns = 0;
-      game.lastMove = ''
+      game.lastMove = 'Start of Game'
       game.currentUser = game.teams.w.players[0].name;
       game.currentFen =
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";

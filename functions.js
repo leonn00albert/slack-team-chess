@@ -82,8 +82,13 @@ const functions = {
   },
   checkForGameId: gameId => {
     function _private(gameId) {
-      const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-      return numbers.some(num => num == gameId);
+      console.log(gameId);
+      const numbers = [];
+      for (let i = 0; i < 1000; i++) {
+        numbers.push(i);
+      }
+
+      return numbers.some(num => num == parseInt(gameId));
     }
     return _private(gameId);
   },
