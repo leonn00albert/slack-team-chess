@@ -39,13 +39,7 @@ const functions = {
     return _private(selectedPlayers);
   },
 
-  validateStartChess: async (
-    arr,
-    alerts,
-    say,
-    messages,
-    gameId
-  ) => {
+  validateStartChess: async (arr, alerts, say, messages, gameId) => {
     const selectedPlayers = arr;
     const humanPlayers = selectedPlayers.filter(
       player => player !== "computer"
@@ -58,11 +52,13 @@ const functions = {
       } else if (functions.checkDuplicatePlayers(selectedPlayers)) {
         return await say(alerts.duplicatedPlayers);
       } else {
+        const preppedPlayers = functions.prepPlayers(selectedPlayers);
         console.log(gameId);
         console.log(typeof gameId);
-        const game = Game.startChess()
+        const game = Game.startGame(preppedPlayers);
+        game.id = gameId;
         await say(messages.startChess(game));
-        console.log(games[gameId]);
+        console.log(game);
         return game;
       }
     }

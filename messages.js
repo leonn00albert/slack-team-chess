@@ -23,7 +23,7 @@ const messages = {
           type: "mrkdwn",
           text: `*Game ID: ${game.id}* - *Turn: ${
             game.turns
-          }* - *Team: ${game.chess.turn().toUpperCase()}*`
+          }* - *Team: ${game.turn.toUpperCase()}*`
         }
       },
 
@@ -81,7 +81,7 @@ const messages = {
               type: "mrkdwn",
               text: `*Game ID: ${game.id}* - *Turn: ${
                 game.turns
-              }* - *Team: ${game.chess.turn().toUpperCase()}*`
+              }* - *Team: ${game.turn.toUpperCase()}*`
             }
           },
           {
@@ -95,7 +95,7 @@ const messages = {
               type: "mrkdwn",
               text: `<${
                 game.currentUser
-              }> Your Turn! *Current Team*: ${game.chess.turn()} *Last Move*: ${
+              }> Your Turn! *Current Team*: ${game.turn} *Last Move*: ${
                 game.lastMove
               }`
             }

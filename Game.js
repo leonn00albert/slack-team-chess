@@ -60,13 +60,17 @@ class Game {
     console.log("----start game----");
     console.log(players);
     function _private(players) {
-      game.createTeams(players);
-      game.teams = Game.createTeams()
+      Game.createTeams(players);
+      game.teams = Game.createTeams(players);
+      game.state = 'Active';
+      game.turns = 0;
+      game.lastMove = ''
       game.currentUser = game.teams.w.players[0].name;
       game.currentFen =
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
       game.startingDate = Game.getCurrentDate();
       game.currentFenUrl = Game.fenUrl(game.currentFen);
+      game.turn = "w";
       return game;
     }
     return _private(players);
@@ -84,7 +88,16 @@ class Game {
   }
 
   static createTeams(arr) {
-    const teams = {}
+    const teams = {
+      w: {
+        players: [],
+        currentPlayer: 0
+      },
+      b: {
+        players: [],
+        currentPlayer: 0
+      }
+    };
     const players = arr;
     console.log("-------teams-----");
 
@@ -101,7 +114,7 @@ class Game {
           teams.w.players.push(player);
         }
       });
-
+      console.log(teams)
       return teams;
     }
     return _private(players);
@@ -124,8 +137,7 @@ class Game {
       game.teams[chess.turn()].players[game.teams[chess.turn()].currentPlayer];
     function _private(move, player) {
       chess.move(move);
-      game.turns += 
-      game.changePlayer(player.team);
+      game.turns += game.changePlayer(player.team);
       game.lastMove = JSON.stringify(move);
       game.currentFen = chess.fen();
       game.currentFenUrl = Game.fenUrl(game.currentFen);
