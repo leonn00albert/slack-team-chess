@@ -34,7 +34,7 @@ const functions = {
     return _private(selectedPlayers);
   },
 
-  validateStartChess: async (arr, alerts, say, messages, games, Game, chess) => {
+  validateStartChess: async (arr, alerts, say, messages, games, Game, chess,gameId) => {
     const selectedPlayers = arr;
     const humanPlayers = selectedPlayers.filter(
       player => player !== "computer"
@@ -47,7 +47,7 @@ const functions = {
       } else if (functions.checkDuplicatePlayers(selectedPlayers)) {
         return await say(alerts.duplicatedPlayers);
       } else {
-        const gameId = Object.keys(games).length;
+       console.log(gameId);
         games[gameId] = new Game(
           chess,
           gameId,

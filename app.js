@@ -59,7 +59,8 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
       messages,
       games,
       Game,
-      chess
+      chess,
+      gameId
     )
     .then(game => {
       const newChessGame = new chessGame(game);
