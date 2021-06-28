@@ -2,7 +2,6 @@ const alerts = {
   duplicatedPlayers: {
     blocks: [
       {
-        response_type: "ephemeral",
         type: "section",
         text: {
           type: "mrkdwn",
@@ -18,7 +17,6 @@ const alerts = {
       {
         type: "section",
         text: {
-          response_type: "ephemeral",
           type: "mrkdwn",
           text:
             ":warning: *Could not start!* Please add some players :arrow_right: `e.g /start-chess  @name @name2 @name3`"
@@ -31,7 +29,6 @@ const alerts = {
       {
         type: "section",
         text: {
-          response_type: "ephemeral",
           type: "mrkdwn",
           text:
             ":warning: *Could not start!* Make sure to Tag the player `e.g /start-chess @name`"
@@ -45,7 +42,6 @@ const alerts = {
       {
         type: "section",
         text: {
-          response_type: "ephemeral",
           type: "mrkdwn",
           text: ":warning: *INVALID MOVE*: Please wait for your turn!"
         }
@@ -57,7 +53,6 @@ const alerts = {
       {
         type: "section",
         text: {
-          response_type: "ephemeral",
           type: "mrkdwn",
           text: ":warning: *INVALID MOVE*: Please use a valid `game ID!``"
         }
@@ -69,7 +64,6 @@ const alerts = {
       {
         type: "section",
         text: {
-          response_type: "ephemeral",
           type: "mrkdwn",
           text: ":warning: *INVALID MOVE*: You have made your move``"
         }
@@ -82,36 +76,31 @@ const alerts = {
       {
         type: "section",
         text: {
-          response_type: "ephemeral",
           type: "mrkdwn",
           text: ":warning: *INVALID MOVE*: Please try something else"
         }
       }
     ]
   },
-
-  noGames: {
+  
+    noGames: {
     blocks: [
       {
         type: "section",
         text: {
-          response_type: "ephemeral",
           type: "mrkdwn",
-          text:
-            ":warning: No games started yet... start a game with /start-chess "
+          text: ":warning: No games started yet... start a game with /start-chess "
         }
       }
     ]
   },
-  showChessNotValidInput: {
-    blocks: [
+  showChessNotValidInput : {
+     blocks: [
       {
         type: "section",
         text: {
-          response_type: "ephemeral",
           type: "mrkdwn",
-          text:
-            ":warning: Not a valid input! either try `mygames` or `allgames`"
+          text: ":warning: Not a valid input! either try `mygames` or `allgames`"
         }
       }
     ]
