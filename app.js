@@ -36,7 +36,8 @@ const chessGameSchema = new mongoose.Schema({
   turns: Number,
   startingDate: Number,
   lastMove: String,
-  message: String
+  message: String,
+  turn: String
 });
 const chessGame = mongoose.model("Game", chessGameSchema);
 
@@ -54,9 +55,6 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
         alerts,
         say,
         messages,
-        games,
-        Game,
-        chess,
         gameId
       )
       .then(game => {

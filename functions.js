@@ -44,9 +44,6 @@ const functions = {
     alerts,
     say,
     messages,
-    games,
-    Game,
-    chess,
     gameId
   ) => {
     const selectedPlayers = arr;
@@ -63,14 +60,10 @@ const functions = {
       } else {
         console.log(gameId);
         console.log(typeof gameId);
-        games[gameId] = new Game(
-          chess,
-          gameId,
-          functions.prepPlayers(selectedPlayers)
-        );
-        await say(messages.startChess(games[gameId]));
+        const game = Game.startChess()
+        await say(messages.startChess(game));
         console.log(games[gameId]);
-        return games[gameId];
+        return game;
       }
     }
     return _private(selectedPlayers);
