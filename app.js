@@ -28,7 +28,7 @@ const chessGameSchema = new mongoose.Schema({
       currentPlayer: Number
     }
   },
-  gameId: String,
+  id: String,
   state: String,
   currentFen: String,
   currentFenUrl: String,
@@ -42,30 +42,27 @@ const chessGame = mongoose.model("Game", chessGameSchema);
 app.command("/start-chess", async ({ body, command, ack, say }) => {
   // Acknowledge command request
   await ack();
-  async function _private() {
-    const games = await chessGame.find({});
-    return games.length.toString();
-  }
 
-  const gameId = _private();
-
-  const selectedPlayers = body.text.split(" ");
-  console.log(selectedPlayers);
-  functions
-    .validateStartChess(
-      selectedPlayers,
-      alerts,
-      say,
-      messages,
-      games,
-      Game,
-      chess,
-      gameId
-    )
-    .then(game => {
-      const newChessGame = new chessGame(game);
-      newChessGame.save();
-    });
+  chessGame.find({}, function(err, foundGames) {
+    const gameId = foundGames.length.toString();
+    const selectedPlayers = body.text.split(" ");
+    console.log(selectedPlayers);
+    functions
+      .validateStartChess(
+        selectedPlayers,
+        alerts,
+        say,
+        messages,
+        games,
+        Game,
+        chess,
+        gameId
+      )
+      .then(game => {
+        const newChessGame = new chessGame(game);
+        newChessGame.save();
+      });
+  });
 });
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {

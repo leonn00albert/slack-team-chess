@@ -48,12 +48,14 @@ const functions = {
         return await say(alerts.duplicatedPlayers);
       } else {
        console.log(gameId);
+       console.log(typeof(gameId))
         games[gameId] = new Game(
           chess,
           gameId,
           functions.prepPlayers(selectedPlayers)
         );
         await say(messages.startChess(games[gameId]));
+        console.log(games[gameId])
         return games[gameId];
       }
     }
