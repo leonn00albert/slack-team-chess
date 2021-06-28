@@ -41,18 +41,7 @@ class Game {
     return n;
   }
 
-  changePlayer(str) {
-    const team = str;
-    const teams = this.teams;
-    function _private(team) {
-      if (teams[team].currentPlayer < teams[team].players.length - 1) {
-        return teams[team].currentPlayer++;
-      } else {
-        return (teams[team].currentPlayer = 0);
-      }
-    }
-    return _private(team);
-  }
+
 
   static startGame(arr) {
     const players = arr;
@@ -138,10 +127,25 @@ class Game {
     function _private(move, player) {
       chess.move(move);
       game.turns += 1;
-      chess
+
       game.lastMove = JSON.stringify(move);
       game.currentFen = chess.fen();
       game.currentFenUrl = Game.fenUrl(game.currentFen);
+      if(chess.turn() === 'w'){
+        if(game.teams['w'].currentPlayer === game.teams['w'].players.length -1) {
+          game.teams['w'].currentPlayer = 0;
+        } else {
+          game.teams['w'].currentPlayer += 1;
+        }
+        
+      } else {
+          if(game.teams['b'].currentPlayer === game.teams['b'].players.length -1) {
+          game.teams['b'].currentPlayer = 0;
+        } else {
+          game.teams['b'].currentPlayer += 1;
+        }
+        
+      }
       game.currentUser =
         game.teams[chess.turn()].players[
           game.teams[chess.turn()].currentPlayer
@@ -172,8 +176,12 @@ class Game {
         return game;
       } else if (game.currentUser === "computer") {
         const computerMove = Game.computerMove();
+        chess.load(game.currentFen);
+        console.log(game.currentFen)
         chess.move(computerMove);
-        game.incrementTurns();
+        console.log(chess.fen())
+        game.turns += 1;
+        game.currentFen = chess.fen();
         Game.fenUrl(game.currentFen);
         game.currentUser =
           game.teams[chess.turn()].players[
