@@ -5,11 +5,10 @@ const Game = require("./Game");
 const functions = require("./functions");
 const alerts = require("./alerts");
 const messages = require("./messages");
-const mongoose = require('mongoose');
-mongoose.connect(`mongodb+srv://leon:${process.env.MONGO_KEY}@cluster0.umurs.mongodb.net/teamchess?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true}`);
-
-const Cat = mongoose.model('Game', { games: {} });
-
+const mongoose = require("mongoose");
+mongoose.connect(
+  `mongodb+srv://leon:${process.env.MONGO_KEY}@cluster0.umurs.mongodb.net/teamchess?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true}`
+);
 
 const chess = new Chess();
 const games = {};
@@ -31,17 +30,21 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
     Game,
     chess
   );
-  const mongoGame = new Game(games);
-mongoGame.save();
+  const chessGame = mongoose.model("Game", chessGameSchema);
+  const chessGameSchema = new mongoose.Schema({
+    gameId: String
+  });
+  const newChessGame = new Game({gameId: '02'});
+  newChessGame.save();
 });
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {
   await ack();
   const user = body.user_name;
-  
+
   const text = body.text.toLowerCase().split(" ");
-  
-  console.log(text + " " + user)
+
+  console.log(text + " " + user);
   const gameId = text[0];
   text.shift();
   const move = text;
