@@ -23,59 +23,52 @@ app.command("/start-chess", async ({ body, command, ack, say }) => {
 
   const selectedPlayers = body.text.split(" ");
   console.log(selectedPlayers);
-  functions.validateStartChess(
-    selectedPlayers,
-    alerts,
-    say,
-    messages,
-    games,
-    Game,
-    chess,
-    function() {}
-  );
-  const chessGameSchema = new mongoose.Schema({
-    teams: {
-      w: {
-        players: Array,
-        currentPlayer: Number
-      },
-      b: {
-        players: Array,
-        currentPlayer: Number
-      }
-    },
-    gameId: String,
-    state: String,
-    currentFen: String,
-    currentFenUrl: String,
-    currentUser: String,
-    turns: Number,
-    startingDate: Number,
-    lastMove: String
-  });
-  const chessGame = mongoose.model("Game", chessGameSchema);
-  const newGame = {
-    teams: {
-      w: {
-        players: [],
-        currentPlayer: 0
-      },
-      b: {
-        players: [],
-        currentPlayer: 0
-      }
-    },
-    gameId: 0,
-    state: "Active",
-    currentFen: "",
-    currentFenUrl: "",
-    currentUser: "",
-    turns: 0,
-    startingDate: 22,
-    lastMove: ""
-  };
-  const newChessGame = new chessGame(newGame);
-  newChessGame.save();
+  functions
+    .validateStartChess(
+      selectedPlayers,
+      alerts,
+      say,
+      messages,
+      games,
+      Game,
+      chess
+    )
+    .then(game => {
+      const chessGameSchema = new mongoose.Schema({
+        teams: {
+          w: {
+            players: Array,
+            currentPlayer: Number
+          },
+          b: {
+            players: Array,
+            currentPlayer: Number
+          }
+        },
+        gameId: String,
+        state: String,
+        currentFen: String,
+        currentFenUrl: String,
+        currentUser: String,
+        turns: Number,
+        startingDate: Number,
+        lastMove: String
+      });
+      const chessGame = mongoose.model("Game", chessGameSchema);
+      const newGame = {
+        teams: game.teams,
+        gameId: 0,
+        state: "Active",
+        currentFen: game.currentFen,
+        currentFenUrl: game.currentFenUrl,
+        currentUser: game.currentUser,
+        turns: game.turns,
+        startingDate: 22,
+        lastMove: ""
+      };
+      const newChessGame = new chessGame(game);
+      newChessGame.save();
+    });
 });
 
 app.command("/chess-move", async ({ command, ack, body, say }) => {

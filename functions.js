@@ -34,7 +34,7 @@ const functions = {
     return _private(selectedPlayers);
   },
 
-  validateStartChess: (arr, alerts, say, messages, games, Game, chess) => {
+  validateStartChess: async (arr, alerts, say, messages, games, Game, chess) => {
     const selectedPlayers = arr;
     const humanPlayers = selectedPlayers.filter(
       player => player !== "computer"
@@ -54,6 +54,7 @@ const functions = {
           functions.prepPlayers(selectedPlayers)
         );
         await say(messages.startChess(games[gameId]));
+        return games[gameId];
       }
     }
     return _private(selectedPlayers);
