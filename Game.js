@@ -132,12 +132,13 @@ class Game {
 
   static move(obj, game) {
     const move = obj;
-    chess.load(game.currentFen());
+    chess.load(game.currentFen);
     const player =
       game.teams[chess.turn()].players[game.teams[chess.turn()].currentPlayer];
     function _private(move, player) {
       chess.move(move);
-      game.turns += game.changePlayer(player.team);
+      game.turns += 1;
+      chess
       game.lastMove = JSON.stringify(move);
       game.currentFen = chess.fen();
       game.currentFenUrl = Game.fenUrl(game.currentFen);

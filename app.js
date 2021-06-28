@@ -75,11 +75,14 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
   text.shift();
   const move = text;
   async function makeMove(game) {
+    const currentUser = game.currentUser.split("@")[1];
+          console.log(game)
     // Acknowledge command request
     if (!functions.checkForGameId(gameId)) {
       return await say(alerts.notValidGameId);
     } else if (
-      functions.checkIfRightUser(user, game.currentUser.split("@")[1])
+
+      functions.checkIfRightUser(user, currentUser)
     ) {
       return await say(alerts.notSamePlayer);
     } else {
@@ -89,7 +92,7 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
 
   chessGame.find({ id: gameId }, function(err, foundGame) {
     console.log(foundGame)
-    makeMove(foundGame);
+    makeMove(foundGame[0]);
   });
 });
 
