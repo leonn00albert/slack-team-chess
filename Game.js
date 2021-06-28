@@ -41,8 +41,6 @@ class Game {
     return n;
   }
 
-
-
   static startGame(arr) {
     const players = arr;
     const game = {};
@@ -51,9 +49,9 @@ class Game {
     function _private(players) {
       Game.createTeams(players);
       game.teams = Game.createTeams(players);
-      game.state = 'Active';
+      game.state = "Active";
       game.turns = 0;
-      game.lastMove = 'Start of Game'
+      game.lastMove = "Start of Game";
       game.currentUser = game.teams.w.players[0].name;
       game.currentFen =
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -103,7 +101,7 @@ class Game {
           teams.w.players.push(player);
         }
       });
-      console.log(teams)
+      console.log(teams);
       return teams;
     }
     return _private(players);
@@ -131,20 +129,24 @@ class Game {
       game.lastMove = JSON.stringify(move);
       game.currentFen = chess.fen();
       game.currentFenUrl = Game.fenUrl(game.currentFen);
-      if(chess.turn() === 'w'){
-        if(game.teams['w'].currentPlayer === game.teams['w'].players.length -1) {
-          game.teams['w'].currentPlayer = 0;
+      if (chess.turn() === "w") {
+        if (
+          game.teams["w"].currentPlayer ===
+          game.teams["w"].players.length - 1
+        ) {
+          game.teams["w"].currentPlayer = 0;
         } else {
-          game.teams['w'].currentPlayer += 1;
+          game.teams["w"].currentPlayer += 1;
         }
-        
       } else {
-          if(game.teams['b'].currentPlayer === game.teams['b'].players.length -1) {
-          game.teams['b'].currentPlayer = 0;
+        if (
+          game.teams["b"].currentPlayer ===
+          game.teams["b"].players.length - 1
+        ) {
+          game.teams["b"].currentPlayer = 0;
         } else {
-          game.teams['b'].currentPlayer += 1;
+          game.teams["b"].currentPlayer += 1;
         }
-        
       }
       game.currentUser =
         game.teams[chess.turn()].players[
@@ -177,17 +179,15 @@ class Game {
       } else if (game.currentUser === "computer") {
         const computerMove = Game.computerMove();
         chess.load(game.currentFen);
-        console.log(game.currentFen)
-        chess.move(computerMove);
-        console.log(chess.fen())
         game.turns += 1;
         game.currentFen = chess.fen();
-        Game.fenUrl(game.currentFen);
+        game.currentFenUrl = Game.fenUrl(game.currentFen);
         game.currentUser =
           game.teams[chess.turn()].players[
             game.teams[chess.turn()].currentPlayer
           ].name;
         console.log(game.currentUser);
+        game.lastMove = "Computer move: " + computerMove;
         game.message = "Computer move";
         return game;
       } else {
