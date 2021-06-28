@@ -75,17 +75,15 @@ app.command("/chess-move", async ({ command, ack, body, say }) => {
   text.shift();
   const move = text;
   async function makeMove(game) {
-    const currentUser = game.currentUser.split("@")[1];
-          console.log(game)
-    // Acknowledge command request
+    const currentUser = game.currentUser.split("@")[1];    // Acknowledge command request
     if (!functions.checkForGameId(gameId)) {
       return await say(alerts.notValidGameId);
     } else if (
-
-      functions.checkIfRightUser(user, currentUser)
+     functions.checkIfRightUser(user, currentUser)
     ) {
       return await say(alerts.notSamePlayer);
-    } else {
+    }  else {
+      
       functions.checkForValidMove(move, game, alerts, say, messages);
     }
   }
