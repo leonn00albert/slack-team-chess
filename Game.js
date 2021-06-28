@@ -109,10 +109,15 @@ class Game {
   static fenUrl(str) {
     const fen = str;
 
-    function _private(fen) {
-      return `http://www.fen-to-image.com/image/36/double/coords/${Game.parseFen(
-        fen
-      )}`;
+    function _private(fen,turn) {
+      
+      if(turn == 'w'){
+         return `https://chessboardimage.com/${fen}.png`
+      }else {
+        return `https://chessboardimage.com/${fen}-flip.png`
+      }
+      // return `http://www.fen-to-image.com/image/36/double/coords/${Game.parseFen(fen)}`;
+     
     }
     return _private(fen);
   }
@@ -125,10 +130,10 @@ class Game {
     function _private(move, player) {
       chess.move(move);
       game.turns += 1;
-
+      game.turn = chess.turn();
       game.lastMove = JSON.stringify(move);
       game.currentFen = chess.fen();
-      game.currentFenUrl = Game.fenUrl(game.currentFen);
+      game.currentFenUrl = Game.fenUrl(game.currentFen,game.turn);
       if (chess.turn() === "w") {
         if (
           game.teams["w"].currentPlayer ===
@@ -185,8 +190,9 @@ class Game {
         chess.load(game.currentFen);
         chess.move(computerMove);
         game.turns += 1;
+        game.turn = chess.turn();
         game.currentFen = chess.fen();
-        game.currentFenUrl = Game.fenUrl(game.currentFen);
+        game.currentFenUrl = Game.fenUrl(game.currentFen,game.turn);
         game.currentUser =
           game.teams[chess.turn()].players[
             game.teams[chess.turn()].currentPlayer
