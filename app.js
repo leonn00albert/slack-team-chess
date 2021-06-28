@@ -10,6 +10,8 @@ mongoose.connect(
   `mongodb+srv://leon:${process.env.MONGO_KEY}@cluster0.umurs.mongodb.net/teamchess?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true}`
 );
 
+const chessGame = require('./model');
+
 const chess = new Chess();
 const games = {};
 const app = new App({
@@ -17,29 +19,8 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-const chessGameSchema = new mongoose.Schema({
-  teams: {
-    w: {
-      players: Array,
-      currentPlayer: Number
-    },
-    b: {
-      players: Array,
-      currentPlayer: Number
-    }
-  },
-  id: String,
-  state: String,
-  currentFen: String,
-  currentFenUrl: String,
-  currentUser: String,
-  turns: Number,
-  startingDate: Number,
-  lastMove: String,
-  message: String,
-  turn: String
-});
-const chessGame = mongoose.model("Game", chessGameSchema);
+
+
 
 app.command("/start-chess", async ({ body, command, ack, say }) => {
   // Acknowledge command request

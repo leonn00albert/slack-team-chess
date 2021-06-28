@@ -2,29 +2,8 @@ const { Chess } = require("chess.js");
 const Game = require("./Game");
 const mongoose = require("mongoose");
 const chess = new Chess();
-const chessGameSchema = new mongoose.Schema({
-  teams: {
-    w: {
-      players: Array,
-      currentPlayer: Number
-    },
-    b: {
-      players: Array,
-      currentPlayer: Number
-    }
-  },
-  id: String,
-  state: String,
-  currentFen: String,
-  currentFenUrl: String,
-  currentUser: String,
-  turns: Number,
-  startingDate: Number,
-  lastMove: String,
-  message: String,
-  turn: String
-});
-const chessGame = mongoose.model("Game", chessGameSchema);
+const chessGame = require('./model');
+
 const functions = {
   checkDuplicatePlayers: arr => {
     let findDuplicates = arr =>
@@ -142,7 +121,7 @@ const functions = {
           messages.chessMove(newGame)
         );
         console.log('-----new game-----')
-      return await chessGame.findOneAndReplace({ id: newGame.id },newGame)
+      return await chessGame.findOneAndUpdate({ id: newGame.id },newGame)
       
        
       }
